@@ -1,8 +1,10 @@
-# Action definition for sending a mission to the Clearpath OutdoorNav software
+# Action definition for executing a NetworkMission by uuid
 
 # goal
+string mission_uuid
 string map_uuid
-clearpath_navigation_msgs/Waypoint waypoint
+string goal_uuid
+bool run_on_start_tasks
 
 ---
 # result
@@ -18,12 +20,13 @@ uint8 code
 
 bool success
 string message
+clearpath_navigation_msgs/MapGoalState[] goal_states
 uint16 NONE=0
 uint16 error_code
 string error_msg
-
 ---
 # feedback
 string message
-clearpath_navigation_msgs/NetworkMissionSegment network_plan
+clearpath_navigation_msgs/MapGoalState[] goal_states
+clearpath_navigation_msgs/MissionSegment plan
 float32 elapsed_time

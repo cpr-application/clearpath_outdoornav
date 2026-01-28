@@ -1,4 +1,4 @@
-# Service for starting network mission previewer
+# Service for previewing the mission path
 
 # goal
 string map_uuid

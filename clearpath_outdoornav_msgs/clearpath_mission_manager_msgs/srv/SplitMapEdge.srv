@@ -14,4 +14,4 @@ float64 new_point_longitude
 bool symmetrical
 ---
 # The map in its new state
-clearpath_navigation_msgs/NetworkMap result
+clearpath_navigation_msgs/Map result

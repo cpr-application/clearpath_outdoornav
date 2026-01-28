@@ -14,24 +14,22 @@ set(CMAKE_CXX_STANDARD 17)
 
 rosidl_generate_interfaces(
     ${PROJECT_NAME}
-        action/ExecuteMissionByUuid.action
-        action/ExecuteNetworkGoTo.action
-        action/ExecuteNetworkGoToPOI.action
-        action/ExecuteNetworkMissionByUuid.action
-        action/ExecuteNetworkMissionFromGoal.action
+        action/ExecuteGoTo.action
+        action/ExecuteGoToPOI.action
+        action/ExecuteMission.action
+        action/ExecuteMissionFromGoal.action
         action/InspectPoi.action
-        action/Mission.action
         action/RecordPath.action
         msg/AutonomyConfig.msg
         msg/AutonomyStatus.msg
-        msg/Mission.msg
         msg/MissionStatus.msg
-        msg/NetworkEdge.msg
-        msg/NetworkGoalState.msg
-        msg/NetworkMap.msg
+        msg/MapEdge.msg
+        msg/MapGoalState.msg
+        msg/Map.msg
+        msg/Mission.msg
+        msg/MissionSegment.msg
+        msg/MapPoint.msg
         msg/NetworkMission.msg
-        msg/NetworkMissionSegment.msg
-        msg/NetworkPoint.msg
         msg/PointOfInterest.msg
         msg/MissionPreview.msg
         msg/GoToPreview.msg

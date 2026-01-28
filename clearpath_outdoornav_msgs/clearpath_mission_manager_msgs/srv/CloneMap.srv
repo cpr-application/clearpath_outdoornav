@@ -7,4 +7,4 @@ string new_name
 
 ---
 # The newly-created copy of the original map, with a new name and new UUID
-clearpath_navigation_msgs/NetworkMap map
+clearpath_navigation_msgs/Map map

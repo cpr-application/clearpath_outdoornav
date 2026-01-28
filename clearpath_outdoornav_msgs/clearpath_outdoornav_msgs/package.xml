@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>clearpath_outdoornav_msgs</name>
+  <version>2.2.0</version>
+  <description>Meta-package for all of the Clearpath OutdoorNav message packages</description>
+  <maintainer email="jmastrangelo@clearpathrobotics.com">José Mastrangelo</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>clearpath_control_msgs</exec_depend>
+  <exec_depend>clearpath_dock_msgs</exec_depend>
+  <exec_depend>clearpath_localization_msgs</exec_depend>
+  <exec_depend>clearpath_logger_msgs</exec_depend>
+  <exec_depend>clearpath_mission_manager_msgs</exec_depend>
+  <exec_depend>clearpath_navigation_msgs</exec_depend>
+  <exec_depend>clearpath_safety_msgs</exec_depend>
+  <exec_depend>clearpath_task_msgs</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

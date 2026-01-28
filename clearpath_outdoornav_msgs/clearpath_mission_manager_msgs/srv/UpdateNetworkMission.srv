@@ -33,7 +33,7 @@ float32 resume_mission_battery_level
 
 # Boolean value indicating whether 'network' level replanning should be performed
 # in the event that a network edge is deemed un-traversable (e.g., due to obstacles)
-bool network_replan_enabled
+bool replan_enabled
 
 ---
 # The resulting Mission, with an auto-generated UUID is returned

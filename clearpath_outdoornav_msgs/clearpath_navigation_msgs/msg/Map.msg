@@ -1,4 +1,4 @@
-# The graph representing the Network of Paths
+# The graph representing the Map
 # This is implemented as a directed graph
 
 string name
@@ -13,7 +13,7 @@ float32 default_radius
 float32 default_speed_limit
 
 # The array of vertices in the graph
-clearpath_navigation_msgs/NetworkPoint[] points
+clearpath_navigation_msgs/MapPoint[] points
 
 # The array of all edges in the graph
-clearpath_navigation_msgs/NetworkEdge[] connections
+clearpath_navigation_msgs/MapEdge[] connections

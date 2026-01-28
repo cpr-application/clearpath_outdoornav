@@ -1,4 +1,4 @@
-# Action for starting network GoTo planner
+# Service for previewing the GoTo path
 
 # goal
 string map_uuid

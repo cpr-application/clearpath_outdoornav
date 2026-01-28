@@ -19,4 +19,4 @@ bool symmetrical
 ---
 
 # The added point, with generated UUID
-clearpath_navigation_msgs/NetworkPoint point
+clearpath_navigation_msgs/MapPoint point

@@ -11,4 +11,4 @@ float64[] longitudes
 ---
 
 # The added point, with generated UUID
-clearpath_navigation_msgs/NetworkPoint[] result
+clearpath_navigation_msgs/MapPoint[] result

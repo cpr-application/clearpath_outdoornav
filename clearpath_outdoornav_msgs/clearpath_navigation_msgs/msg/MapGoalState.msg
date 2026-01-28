@@ -1,4 +1,4 @@
-# Message containing status of individual Waypoint in NetworkMission
+# Message containing status of individual Waypoint in Mission
 
 uint8 PENDING = 0
 uint8 ACTIVE = 1

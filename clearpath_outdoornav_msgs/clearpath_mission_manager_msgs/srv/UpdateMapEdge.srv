@@ -24,4 +24,4 @@ float32 cost_factor
 ---
 
 # The updated edge
-clearpath_navigation_msgs/NetworkEdge result
+clearpath_navigation_msgs/MapEdge result

@@ -1,2 +1,2 @@
 
-clearpath_navigation_msgs/NetworkMissionSegment[] segments
+clearpath_navigation_msgs/MissionSegment[] segments

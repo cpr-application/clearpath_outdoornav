@@ -2,7 +2,7 @@
 
 # goal
 string dock_name
-string network_uuid
+string map_uuid
 
 ---
 # result
@@ -14,5 +14,5 @@ string error_msg
 ---
 # feedback
 string message
-clearpath_navigation_msgs/NetworkMissionSegment network_plan
+clearpath_navigation_msgs/MissionSegment plan
 float32 elapsed_time

@@ -5,7 +5,7 @@
 # - a Waypoint can be orphaned (i.e. not included in any Missions)
 # - a Task can be orphaned (i.e. not included in any Waypoints)
 
-# All missions defined in the database
+# All missions defined in the database [deprecated, DO NOT USE]
 clearpath_navigation_msgs/Mission[] missions
 
 # All waypoints defined in the database
@@ -18,7 +18,7 @@ clearpath_task_msgs/Task[] tasks
 clearpath_navigation_msgs/NetworkMission[] network_missions
 
 # All network of paths maps in the database
-clearpath_navigation_msgs/NetworkMap[] network_maps
+clearpath_navigation_msgs/Map[] network_maps
 
 # Points of interest
 clearpath_navigation_msgs/PointOfInterest[] points_of_interest

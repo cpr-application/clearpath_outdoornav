@@ -3,4 +3,4 @@
 # The UUID of the map to check
 string uuid
 ---
-clearpath_mission_manager_msgs/NetworkMapState state
+clearpath_mission_manager_msgs/MapState state

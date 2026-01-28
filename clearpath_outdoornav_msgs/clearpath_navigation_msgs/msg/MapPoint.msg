@@ -1,4 +1,4 @@
-# A node on the network of paths
+# A node on the map
 
 # The unique ID of this point
 string uuid

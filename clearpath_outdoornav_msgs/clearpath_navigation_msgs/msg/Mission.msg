@@ -12,12 +12,5 @@ string uuid
 clearpath_navigation_msgs/Waypoint[] waypoints
 
 # An array of Tasks to execute on Mission start
-clearpath_task_msgs/Task[] on_start
-
-# An array of Tasks to execute on Mission stop
 # These Tasks will execute regardless of mission success or failure
 clearpath_task_msgs/Task[] on_stop
-
-# Configuration parameters for the mission
-# Additional details TBD
-string onav_config

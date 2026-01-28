@@ -1,6 +1,0 @@
-# The mission to import. UUIDs that do not already exist are added, but objects with existing UUIDs
-# are re-used
-clearpath_navigation_msgs/Mission mission
----
-# The imported mission
-clearpath_navigation_msgs/Mission mission

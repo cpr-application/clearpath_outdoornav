@@ -18,13 +18,13 @@ uint8 code
 
 bool success
 string message
-clearpath_navigation_msgs/NetworkGoalState[] goal_states
+clearpath_navigation_msgs/MapGoalState[] goal_states
 uint16 NONE=0
 uint16 error_code
 string error_msg
 ---
 # feedback
 string message
-clearpath_navigation_msgs/NetworkGoalState[] goal_states
-clearpath_navigation_msgs/NetworkMissionSegment network_plan
+clearpath_navigation_msgs/MapGoalState[] goal_states
+clearpath_navigation_msgs/MissionSegment plan
 float32 elapsed_time

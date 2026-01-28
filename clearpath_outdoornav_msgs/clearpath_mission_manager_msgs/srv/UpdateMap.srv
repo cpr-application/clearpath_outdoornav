@@ -4,4 +4,4 @@ string name
 float32 default_radius
 float32 default_speed_limit
 ---
-clearpath_navigation_msgs/NetworkMap result
+clearpath_navigation_msgs/Map result

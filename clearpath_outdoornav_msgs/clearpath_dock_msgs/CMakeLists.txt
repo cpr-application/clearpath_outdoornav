@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 rosidl_generate_interfaces(
     ${PROJECT_NAME}
-        action/NetworkDock.action
+        action/MapDock.action
         action/Dock.action
         action/Undock.action
         msg/DockInfoArray.msg

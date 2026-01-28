@@ -1,5 +1,0 @@
-# The UUID of the Mission we want to retrieve
-string uuid
----
-# The Mission with the given ID, or null if no Mission with that ID exists
-clearpath_navigation_msgs/Mission mission

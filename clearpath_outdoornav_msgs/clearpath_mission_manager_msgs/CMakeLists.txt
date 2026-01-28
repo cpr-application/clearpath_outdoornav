@@ -10,21 +10,19 @@ set(CMAKE_CXX_STANDARD 17)
 
 rosidl_generate_interfaces(
     ${PROJECT_NAME}
-        msg/NetworkEdgeReq.msg
-        msg/NetworkMapState.msg
-        msg/NetworkMapValidityState.msg
+        msg/MapEdgeReq.msg
+        msg/MapState.msg
+        msg/MapValidityState.msg
         msg/StorageState.msg
-        srv/AddNetworkEdge.srv
-        srv/AddNetworkPath.srv
-        srv/AddNetworkPoint.srv
+        srv/AddMapEdge.srv
+        srv/AddMapPath.srv
+        srv/AddMapPoint.srv
         srv/AddRemoveById.srv
         srv/AddRemoveTag.srv
-        srv/CloneMission.srv
-        srv/CloneNetworkMap.srv
+        srv/CloneMap.srv
         srv/CloneNetworkMission.srv
         srv/ClonePointOfInterest.srv
-        srv/CreateMission.srv
-        srv/CreateNetworkMap.srv
+        srv/CreateMap.srv
         srv/CreateNetworkMission.srv
         srv/CreatePointOfInterest.srv
         srv/CreateTask.srv
@@ -34,36 +32,32 @@ rosidl_generate_interfaces(
         srv/DeleteEverything.srv
         srv/DeleteMultiple.srv
         srv/ExportData.srv
-        srv/GetAllMissions.srv
-        srv/GetAllNetworkMaps.srv
+        srv/GetAllMaps.srv
         srv/GetAllNetworkMissions.srv
         srv/GetAllPointsOfInterest.srv
         srv/GetAllTasks.srv
         srv/GetAllWaypoints.srv
         srv/GetEverything.srv
-        srv/GetMission.srv
-        srv/GetNetworkMap.srv
+        srv/GetMap.srv
         srv/GetNetworkMission.srv
         srv/GetPointOfInterest.srv
         srv/GetTask.srv
         srv/GetWaypoint.srv
         srv/ImportData.srv
-        srv/ImportMission.srv
-        srv/ImportNetworkMap.srv
+        srv/ImportMap.srv
         srv/ImportNetworkMission.srv
         srv/ImportTask.srv
-        srv/SplitNetworkEdge.srv
-        srv/UpdateMission.srv
-        srv/UpdateNetworkEdge.srv
-        srv/UpdateNetworkEdges.srv
-        srv/UpdateNetworkMap.srv
+        srv/SplitMapEdge.srv
+        srv/UpdateMapEdge.srv
+        srv/UpdateMapEdges.srv
+        srv/UpdateMap.srv
         srv/UpdateNetworkMission.srv
-        srv/UpdateNetworkPoint.srv
-        srv/UpdateNetworkPoints.srv
+        srv/UpdateMapPoint.srv
+        srv/UpdateMapPoints.srv
         srv/UpdatePointOfInterest.srv
         srv/UpdateTask.srv
         srv/UpdateWaypoint.srv
-        srv/ValidateNetworkMap.srv
+        srv/ValidateMap.srv
     DEPENDENCIES
         clearpath_navigation_msgs
         clearpath_task_msgs

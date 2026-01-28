@@ -1,4 +1,4 @@
-# Action definition for sending a GoTo POI to the Clearpath OutdoorNav software
+# Action definition for sending a the robot to a POI using the Clearpath OutdoorNav software
 
 # goal
 string poi_uuid
@@ -25,5 +25,5 @@ string error_msg
 ---
 # feedback
 string message
-clearpath_navigation_msgs/NetworkMissionSegment network_plan
+clearpath_navigation_msgs/MissionSegment plan
 float32 elapsed_time
