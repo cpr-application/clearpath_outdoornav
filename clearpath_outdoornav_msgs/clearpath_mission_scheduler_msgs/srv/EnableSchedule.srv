@@ -1,0 +1,11 @@
+# The ID of the schedule to enable/disable
+string uuid
+
+# Should this schedule be enabled or disabled?
+bool enable
+
+---
+
+# True if we successfully enabled/disabled the schedule
+# False if there was an error or the schedule wasn't found
+bool ok

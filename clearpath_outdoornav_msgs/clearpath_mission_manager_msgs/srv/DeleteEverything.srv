@@ -1,0 +1,8 @@
+# Used to permanently delete everything from the database.
+# Use this service at your own risk
+
+# This must be set to true to confirm you really want to delete everything
+bool yes_i_am_absolutely_sure_i_want_to_do_this
+---
+# True if the database was cleared, otherwise False
+bool ok

@@ -1,0 +1,12 @@
+# The UUID of the mission to clone
+string uuid
+
+# The new name for the mission
+# If blank, the old mission name will be re-used with -copy appended to the end
+string new_name
+
+# If true, the order of the waypoints within the cloned mission are reversed
+bool reverse
+---
+# The Mission with the given ID, or null if no Mission with that ID exists
+clearpath_navigation_msgs/Mission mission

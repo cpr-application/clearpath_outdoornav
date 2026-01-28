@@ -1,0 +1,8 @@
+# The UUID of the item whose tags we're modifying
+string uuid
+
+# The tag to add/remove
+string tag
+---
+# The item's tags after modification
+string[] tags

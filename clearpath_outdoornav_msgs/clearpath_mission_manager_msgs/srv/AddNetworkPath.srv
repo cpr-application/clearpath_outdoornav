@@ -1,0 +1,13 @@
+# The lat-lon locations of the points to add
+float64[] latitudes
+float64[] longitudes
+
+# The UUID of the map we're adding points to
+string map_id
+
+# If true, bidirectional edges are added between the points
+bool symmetrical
+
+---
+bool success
+string message

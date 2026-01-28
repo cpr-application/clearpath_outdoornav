@@ -1,0 +1,8 @@
+# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
+
+bool enable_path_smoother
+float32 turn_radius
+float32 step_size
+---
+bool success
+string message

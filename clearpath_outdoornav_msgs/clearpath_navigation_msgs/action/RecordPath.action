@@ -1,0 +1,29 @@
+# Action definition for recording a path while the robot is driving
+
+# goal
+
+# the maximum allowed deviation in the smoothed path in meters
+# this value is used during the path simiplification
+float64 max_deviation
+
+# the minimum allowable distance between points (in meters) published in the feedback
+# this filters the feedback topic to reduce the number of points published
+# the final result _may_ include points closer than this distance as a result of
+# the final simplification
+float64 min_distance
+
+---
+# result
+
+# the simplified path; the length of this path will be <= the length of the last feedback
+# [0] = latitude
+# [1] = longitude
+clearpath_navigation_msgs/Vector2D64[] points
+
+---
+# feedback
+
+# current progress; the raw points recorded so far
+# [0] = latitude
+# [1] = longitude
+clearpath_navigation_msgs/Vector2D64[] points

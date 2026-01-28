@@ -1,0 +1,35 @@
+# The desired name for the Task
+string name
+
+# The ROS Action to invoke to execute the task
+string action_server_name
+
+# The version of the task
+string version
+
+# The numerical arguments to pass to the action_server_name
+float64[] floats
+
+# The string arguments to pass to the action_server_name
+string[] strings
+
+# Boolean value which determines whether a mission using this task can continue
+# if this task fails to execute
+bool allow_failure
+
+# Optional list of Waypoint UUIDs to assign this task to automatically
+# The new task will be appended to the end of the existing Waypoints
+string[] assign_to_wp
+
+# Optional list of Mission UUIDs to assign this task to automatically
+# The new task will be appended to the end of the existing on_start tasks
+# associated with the specified mission
+string[] assign_on_start
+
+# Optional list of Waypoint UUIDs to assign this task to automatically
+# The new task will be appended to the end of the existing on_stop tasks
+# associated with the specified mission
+string[] assign_on_stop
+---
+# The resulting Task with an auto-generated UUID is returned
+clearpath_navigation_msgs/Task result

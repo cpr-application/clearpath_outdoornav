@@ -1,0 +1,6 @@
+# The map to import. UUIDs that do not already exist are added, but objects with existing UUIDs
+# are re-used
+clearpath_navigation_msgs/NetworkMap map
+---
+# The imported map
+clearpath_navigation_msgs/NetworkMap map

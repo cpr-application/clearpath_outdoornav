@@ -1,0 +1,17 @@
+# Action definition for executing a schedule on-demand
+# Potentially only useful for debugging
+
+# The UUID of the schedule to execute
+string uuid
+
+# Wait this long before starting the schedule
+builtin_interfaces/Duration delay
+---
+# Did the schedule terminate successfully?
+bool success
+---
+# The ID of the mission we're executing right now
+string current_mission_uuid
+
+# One of "waiting" or "executing" indicating what the schedule is doing
+string state

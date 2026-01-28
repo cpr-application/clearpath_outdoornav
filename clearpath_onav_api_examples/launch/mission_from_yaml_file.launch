@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-   <node pkg="clearpath_onav_api_examples" type="mission_from_yaml_file" name="mission_from_yaml_file" output="screen" respawn="false">
-   </node>
-</launch>

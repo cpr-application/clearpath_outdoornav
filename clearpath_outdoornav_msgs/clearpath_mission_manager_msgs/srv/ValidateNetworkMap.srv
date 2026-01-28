@@ -1,0 +1,6 @@
+# Checks that a Network of Paths map is valid and error/warning-free
+
+# The UUID of the map to check
+string uuid
+---
+clearpath_mission_manager_msgs/NetworkMapState state

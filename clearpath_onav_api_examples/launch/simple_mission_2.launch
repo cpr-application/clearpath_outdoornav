@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-   <node pkg="clearpath_onav_api_examples" type="simple_mission_2" name="simple_mission_2" output="screen" respawn="false">
-   </node>
-</launch>

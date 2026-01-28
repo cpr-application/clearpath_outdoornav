@@ -1,0 +1,10 @@
+# The UUID of the map to clone
+string uuid
+
+# The new name for the map
+# If blank, the old map name will be re-used with -copy appended to the end
+string new_name
+
+---
+# The newly-created copy of the original map, with a new name and new UUID
+clearpath_navigation_msgs/NetworkMap map

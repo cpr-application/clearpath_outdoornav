@@ -1,0 +1,5 @@
+# Service definition to convert the Lat/Lon to Cartesian coordinates
+
+sensor_msgs/NavSatFix msg
+---
+geometry_msgs/PoseStamped pose

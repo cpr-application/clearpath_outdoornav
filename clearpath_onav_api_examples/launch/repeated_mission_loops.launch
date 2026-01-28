@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-   <group ns="repeated_mission_loops">
-       <rosparam command="load" file="$(find clearpath_onav_api_examples)/config/repeated_mission_loops.yaml" />
-   </group>
-   <node pkg="clearpath_onav_api_examples" type="repeated_mission_loops" name="repeated_mission_loops" output="screen" respawn="false">
-   </node>
-</launch>

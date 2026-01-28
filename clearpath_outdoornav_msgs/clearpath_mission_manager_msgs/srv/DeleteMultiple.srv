@@ -1,0 +1,8 @@
+# A list of UUIDs of items we want to delete
+string[] uuids
+
+# An optional ID of the parent object we're deleting from
+string parent_id
+---
+# A list of UUIDs that we were asked to delete, but failed to
+string[] failed_uuids

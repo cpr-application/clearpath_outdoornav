@@ -1,0 +1,17 @@
+# Splits an edge on a NetworkMap to connect to a new point
+
+# The UUID of the map to edit
+string map_id
+
+# The UUID of the edge we want to split
+string edge_id
+
+# The position of the new point to create
+float64 new_point_latitude
+float64 new_point_longitude
+
+# If true, we also split the reverse edge (if it exists)
+bool symmetrical
+---
+# The map in its new state
+clearpath_navigation_msgs/NetworkMap result

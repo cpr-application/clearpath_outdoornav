@@ -1,0 +1,10 @@
+# An error code indicating the type of error
+int32 error_code
+
+# A diagnostic error message, or non-integer error code
+string error_msg
+
+# The name of the module/process/pipeline/etc... that signalled the error
+string error_component
+---
+clearpath_logger_msgs/Event event

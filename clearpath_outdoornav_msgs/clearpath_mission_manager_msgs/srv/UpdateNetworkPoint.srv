@@ -1,0 +1,14 @@
+# The UUID of the map we're working on
+string map_id
+
+# The UUID of the point to edit
+string uuid
+
+# The location of this point on the map
+float64 latitude
+float64 longitude
+
+---
+
+# The added point, with generated UUID
+clearpath_navigation_msgs/NetworkPoint result

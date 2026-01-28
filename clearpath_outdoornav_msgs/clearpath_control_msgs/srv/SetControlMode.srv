@@ -1,0 +1,4 @@
+# Service definition to set the control mode
+
+clearpath_control_msgs/ControlMode mode
+---

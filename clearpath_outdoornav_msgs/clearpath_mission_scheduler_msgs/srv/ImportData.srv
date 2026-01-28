@@ -1,0 +1,7 @@
+# A JSON string representing the database contents.
+# This is the same as the data output by the ExportData service, and is intended
+# to be used to restore the database to a previous state
+string data
+---
+# The state of the database after importing the data
+clearpath_mission_scheduler_msgs/StorageState state

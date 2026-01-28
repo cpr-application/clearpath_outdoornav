@@ -1,0 +1,13 @@
+# Request
+string dock_name
+---
+# Result
+uint16 error_code
+bool success
+float32 elapsed_time
+string message
+---
+# Feedback
+uint16 state
+float32 elapsed_time
+string message

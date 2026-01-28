@@ -1,0 +1,5 @@
+
+WatchdogConfigTopicData new_config
+string current_name     # used as a key to find the watchdog in the list of watchdogs
+---
+bool success

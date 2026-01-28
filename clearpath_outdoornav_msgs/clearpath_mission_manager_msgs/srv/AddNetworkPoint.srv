@@ -1,0 +1,22 @@
+# The location of this point on the map
+float64 latitude
+float64 longitude
+
+# The UUID of the map we're adding this point to
+string map_id
+
+# Optional list of node IDs in the map we want to connect to the new node
+# This specifies edges originating in the given nodes, pointing to the new node
+string[] connect_from
+
+# Optional list of node IDs in the map we want to connect to the new node
+# This specifies edges originating at the new node, pointing to the nodes with the given UUIDs
+string[] connect_to
+
+# If true, bidirectional edge are added between the nodes specified in connect_from and connect_to
+bool symmetrical
+
+---
+
+# The added point, with generated UUID
+clearpath_navigation_msgs/NetworkPoint point

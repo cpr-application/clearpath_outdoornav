@@ -1,0 +1,3 @@
+clearpath_navigation_msgs/PointOfInterest point_of_interest
+---
+clearpath_navigation_msgs/Waypoint waypoint

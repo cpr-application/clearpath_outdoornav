@@ -1,0 +1,4 @@
+# The UUID of the NetworkMap we want to retrieve
+string uuid
+---
+clearpath_navigation_msgs/NetworkMap map

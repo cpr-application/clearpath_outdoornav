@@ -1,0 +1,27 @@
+# The UUID of the map we're operating on
+string map_id
+
+# The UUIDs of the start and end points for this edge
+string uuid
+
+# The UUIDs of the start & end points of the edge we're editing
+# Ignored if null/empty
+string start_point_id
+string end_point_id
+
+# The operational radius around the edge
+float32 radius
+
+# The speed limit when driving along this edge
+float32 speed_limit
+
+# An additional cost factor to prioritize certain edges over others in the planner
+# Higher costs -> edge is less likely to be included in the planned route
+# Expected range is (0.0, 100.0) (exclusive range).
+# Values outside the expected range will be treated as the default 1.0
+float32 cost_factor
+
+---
+
+# The updated edge
+clearpath_navigation_msgs/NetworkEdge result

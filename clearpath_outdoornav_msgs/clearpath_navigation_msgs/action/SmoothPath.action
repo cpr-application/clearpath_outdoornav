@@ -1,0 +1,29 @@
+#goal
+uint8             CUBIC_SPLINE_SMOOTHER = 1
+uint8             DUBINS_SMOOTHER = 2
+uint8             GENERIC_SMOOTHER = 3
+
+nav_msgs/Path     path
+uint8             type
+
+## Parameters for cubic spline smoother
+int32             spline_points_per_unit
+int32             spline_skip_points
+bool              spline_use_end_conditions
+bool              spline_use_middle_conditions
+
+## Parameters for dubins
+float64           dubins_turning_radius
+float64           dubins_step_size
+
+## Parameters for generic
+bool              generic_enable_refinement
+int32             generic_refinement_iterations
+
+---
+#result definition
+nav_msgs/Path smoothed_path
+float64 time
+---
+#feedback
+string sequence

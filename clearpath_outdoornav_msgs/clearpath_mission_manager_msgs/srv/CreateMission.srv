@@ -1,0 +1,18 @@
+# The desired name for the new mission
+string name
+
+# The additional configuration options
+# see clearpath_navigation_msgs/msg/Mission for details
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
+
+# The ordered list of Task UUIDs to include in the on_start Task Array
+string[] on_start_ids
+
+# The ordered list of Task UUIDs to include in the on_stop Task Array
+string[] on_stop_ids
+---
+# The resulting Mission, with an auto-generated UUID is returned
+clearpath_navigation_msgs/Mission result

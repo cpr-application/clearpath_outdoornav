@@ -1,0 +1,23 @@
+# Update multiple edges in a single map
+
+# The UUID of the map we're operating on
+string map_id
+
+# The UUIDs of the start and end points for this edge
+string[] uuids
+
+# The operational radii around the edges
+# Ignored if negative
+float32[] radii
+
+# The speed limit when driving along the edges
+# Ignored if negative
+float32[] speed_limits
+
+# The cost factors of the edges
+float32[] cost_factors
+
+---
+
+# The updated edge
+clearpath_navigation_msgs/NetworkEdge[] result

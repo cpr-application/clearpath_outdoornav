@@ -1,0 +1,5 @@
+# Service definition to get dock related into for dock specified by UUID
+
+---
+clearpath_dock_msgs/DockDatabase database
+bool success

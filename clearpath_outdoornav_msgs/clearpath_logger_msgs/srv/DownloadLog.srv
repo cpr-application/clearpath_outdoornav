@@ -1,0 +1,8 @@
+# The UUID of the recording to download
+string log_uuid
+---
+# The on-disk path the the generated archive
+string path
+
+# If True at least one media file from the recording has been moved/deleted
+bool media_missing

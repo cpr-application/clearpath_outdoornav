@@ -1,0 +1,18 @@
+# Action definition for undocking a Clearpath UGV from one of its charging docks.
+
+# goal
+string dock_name
+string network_uuid
+
+---
+# result
+bool success
+string message
+uint16 NONE=0
+uint16 error_code
+string error_msg
+---
+# feedback
+string message
+clearpath_navigation_msgs/NetworkMissionSegment network_plan
+float32 elapsed_time

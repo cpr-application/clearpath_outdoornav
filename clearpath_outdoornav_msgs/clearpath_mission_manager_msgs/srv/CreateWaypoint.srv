@@ -1,0 +1,27 @@
+# The desired name for the Waypoint
+string name
+
+# The latitude for the Waypoint in degrees
+float64 latitude
+
+# The longitude for the Waypoint in degrees
+float64 longitude
+
+# The compass heading in degrees for the Waypoint
+float64 heading
+
+# The position tolerance for the Waypoint in meters
+float64 position_tolerance
+
+# The orientation tolerance for the Waypoint in degrees
+float64 yaw_tolerance
+
+# Optional ordered list of Task UUIDs to execute at this Waypoint
+string[] task_ids
+
+# Optional list of Mission UUIDs to assign the new Waypoint to
+# The new Waypoint is appended to the end of the existing Missions
+string[] assign_to
+---
+# The resulting Waypoint with an auto-generated UUID is returned
+clearpath_navigation_msgs/Waypoint result

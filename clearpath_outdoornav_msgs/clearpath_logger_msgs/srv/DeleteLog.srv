@@ -1,0 +1,5 @@
+string uuid
+bool delete_media
+bool purge_record
+---
+bool success

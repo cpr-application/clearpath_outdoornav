@@ -1,0 +1,5 @@
+# The UUID of the Task we want to retrieve
+string uuid
+---
+# The Task with the given ID, or null if no Task with that ID exists
+clearpath_navigation_msgs/Task task

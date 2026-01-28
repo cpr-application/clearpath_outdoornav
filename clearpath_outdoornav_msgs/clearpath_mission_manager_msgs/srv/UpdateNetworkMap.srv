@@ -1,0 +1,7 @@
+string uuid
+
+string name
+float32 default_radius
+float32 default_speed_limit
+---
+clearpath_navigation_msgs/NetworkMap result

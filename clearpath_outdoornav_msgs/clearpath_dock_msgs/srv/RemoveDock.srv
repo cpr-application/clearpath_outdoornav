@@ -1,0 +1,9 @@
+# Service definition to remove a dock from the list of available docks
+
+# The uuid or the semantic name of the dock to be removed
+# string uuid
+string name
+---
+# True if the dock has been removed successfully, otherwise False
+bool success
+string message

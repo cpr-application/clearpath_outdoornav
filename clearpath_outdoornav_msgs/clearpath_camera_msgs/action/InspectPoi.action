@@ -1,0 +1,14 @@
+# Action definition for inspecting a Point of Interest (POI) with a PTZ mounted on the Clearpth UGV
+
+# goal
+string poi_uuid
+float32 zoom
+
+---
+# result
+bool success
+string message
+
+---
+# feedback
+string message

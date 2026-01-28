@@ -1,0 +1,4 @@
+# Additional custom end-of-mission metrics to record as part of the log
+string custom_fields_json
+---
+clearpath_logger_msgs/EventLog log

@@ -1,0 +1,7 @@
+# Service definition to either create a new dock or update an existing dock.
+string name
+clearpath_dock_msgs/DockInfo dock
+---
+# True if the location was updated/added successfully, otherwise False
+bool success
+string message

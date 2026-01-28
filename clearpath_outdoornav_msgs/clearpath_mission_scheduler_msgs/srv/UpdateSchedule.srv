@@ -1,0 +1,38 @@
+# The ID of the mission to edit
+string uuid
+
+# The human-readable name for this schedule
+# Should be unique, but there's no hard requirement for it to be so
+string name
+
+# The time that this mission starts every day
+clearpath_mission_scheduler_msgs/UtcTime start_time
+
+# Either Schedule.MODE_ONCE, Schedule.MODE_LOOP, OR Schedule.MODE_TRANSIENT to indicate the execution mode
+uint8 mode
+
+# In MODE_LOOP, how many times do we repeat the missions?
+uint8 loop_repeats
+
+# In MODE_LOOP, how long do we wait between executions?
+builtin_interfaces/Duration loop_interval
+
+# The ordered list of Mission UUIDs to execute
+string[] mission_ids
+
+# The minimum battery charge needed before we execute the missions
+# Must be in the range 0-1
+float32 min_battery
+
+# If the missions take longer than this to execute, assume the schedule has failed and alert the user
+# Set to zero to disable the timeout
+builtin_interfaces/Duration timeout
+
+# Is this schedule enabled?
+# Only enabled schedules will execute
+bool enabled
+
+---
+
+# The modified mission, as-saved on disk
+clearpath_mission_scheduler_msgs/Schedule result

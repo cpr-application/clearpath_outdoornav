@@ -1,0 +1,4 @@
+WatchdogConfigCommon base_config
+string manager
+string nodelet
+uint8 num_requests

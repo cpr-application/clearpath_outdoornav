@@ -1,0 +1,9 @@
+# Service for starting network mission previewer
+
+# goal
+string map_uuid
+string mission_uuid
+---
+# result
+bool success
+

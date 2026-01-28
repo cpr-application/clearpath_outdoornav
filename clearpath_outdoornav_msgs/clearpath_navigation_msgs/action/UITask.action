@@ -1,0 +1,10 @@
+#goal definition
+string version
+float64[] floats
+string[] strings
+---
+#result definition
+bool success
+---
+#feedback
+string state

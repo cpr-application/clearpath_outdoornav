@@ -1,0 +1,9 @@
+# Service definition to re-position a pan-tilt-zoom camera to a specific location with a specified zoom
+# Used primarily for box-zoom like functionality
+
+float32 x # X location to move camera to, expressed as a fraction of image dimension (0 to 1, where 0.5 is current center)
+float32 y # Y location to move camera to, expressed as a fraction of image dimension (0 to 1, where 0.5 is current center)
+float32 zoom_factor
+---
+bool success
+string message

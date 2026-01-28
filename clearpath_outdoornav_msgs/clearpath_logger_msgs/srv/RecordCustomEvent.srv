@@ -1,0 +1,10 @@
+# A valid JSON string containing the custom data to be recorded
+string custom_fields_json
+
+# Tags to add to the event
+string[] tags
+
+# Optional frame ID relevant to the event
+string frame_id
+---
+clearpath_logger_msgs/Event event

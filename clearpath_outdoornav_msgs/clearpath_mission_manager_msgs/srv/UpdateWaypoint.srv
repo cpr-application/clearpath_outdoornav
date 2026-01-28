@@ -1,0 +1,26 @@
+# The UUID of the Waypoint to edit
+string uuid
+
+# The human-readable name for the Waypoint
+string name
+
+# The latitude of the Waypoint in degrees
+float64 latitude
+
+# The longitude of the Waypoint in degrees
+float64 longitude
+
+# The compass heading of the Waypoint in degrees
+float64 heading
+
+# The Waypoint's position tolerance in meters
+float64 position_tolerance
+
+# The Waypoint's orientation tolerance in degrees
+float64 yaw_tolerance
+
+# The ordered list of Task UUIDs to execute at this Waypoint
+string[] task_ids
+---
+# The edited Waypoint, or null if no Waypoint with the given ID exists
+clearpath_navigation_msgs/Waypoint result

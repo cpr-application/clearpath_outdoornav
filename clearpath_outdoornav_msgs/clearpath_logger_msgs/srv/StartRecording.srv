@@ -1,0 +1,4 @@
+# A human-readable name for the log
+string name
+---
+clearpath_logger_msgs/EventLog log

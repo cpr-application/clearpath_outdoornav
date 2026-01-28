@@ -1,0 +1,5 @@
+# The UUID of the object we want to delete
+string uuid
+---
+# True if the item was successfully deleted, otherwise False
+bool ok

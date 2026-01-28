@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-   <node pkg="clearpath_onav_api_examples" type="control_modes" name="control_modes" output="screen" respawn="false">
-   </node>
-</launch>

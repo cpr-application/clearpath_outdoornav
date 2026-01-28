@@ -1,6 +1,0 @@
-__pycache__
-!clearpath_onav_api_examples/
-!clearpath_onav_api_examples_lib/
-clearpath_onav_api_examples_lib/docs/*.rst
-clearpath_onav_api_examples_lib/docs/_build
-clearpath_onav_api_examples_lib/docs/_static

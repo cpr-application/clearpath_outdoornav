@@ -1,0 +1,5 @@
+string uuid
+
+string new_name
+---
+clearpath_navigation_msgs/PointOfInterest result

@@ -1,0 +1,17 @@
+
+string version
+float64[] floats
+string[] strings
+---
+#List of possible things that we will use in status, add more items later
+uint8 NOGPS = 0
+uint8 NOHEADING_RTK = 1
+uint8 ROBOT_IS_MOVING = 2
+uint8 ERROR = 3
+uint8 SERVICE_NOT_AVAILABLE = 4
+uint8 PENDING = 5
+uint8 COMPLETED = 6
+
+
+bool success
+int8 status

@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-   <node pkg="clearpath_onav_api_examples" type="simple_area_coverage" name="simple_area_coverage" output="screen" respawn="false" required="true">
-   </node>
-</launch>

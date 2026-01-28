@@ -1,0 +1,6 @@
+# Service definition to set the datum with a latitude (lat) and longitude (lon)
+
+float32 lat
+float32 lon
+---
+bool success

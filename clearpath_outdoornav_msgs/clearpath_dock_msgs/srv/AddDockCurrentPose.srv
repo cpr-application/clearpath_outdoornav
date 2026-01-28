@@ -1,0 +1,7 @@
+
+string dock_name
+string dock_template
+---
+bool success
+string message
+clearpath_dock_msgs/DockInfo dock

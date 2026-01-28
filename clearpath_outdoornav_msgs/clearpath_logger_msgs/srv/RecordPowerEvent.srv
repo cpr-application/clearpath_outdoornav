@@ -1,0 +1,8 @@
+# The battery's current level
+# 0.0 to 1.0
+float32 battery_percent
+
+# Is the battery currently charging?
+bool charging
+---
+clearpath_logger_msgs/Event event

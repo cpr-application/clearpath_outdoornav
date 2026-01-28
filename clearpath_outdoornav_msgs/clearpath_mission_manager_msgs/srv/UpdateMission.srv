@@ -1,0 +1,20 @@
+# The UUID of the mission we want to edit
+string uuid
+
+# The human-readable name for the Mission
+string name
+
+# The configuration parameters for the Mission
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in the Mission
+string[] waypoint_ids
+
+# The ordered list of Task UUIDs to include in the on_start Task Array
+string[] on_start_ids
+
+# The ordered list of Task UUIDs to include in the on_stop Task Array
+string[] on_stop_ids
+---
+# The edited Mission, or null if no mission with the given ID exists
+clearpath_navigation_msgs/Mission result

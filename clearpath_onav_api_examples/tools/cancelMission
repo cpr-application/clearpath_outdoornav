@@ -1,9 +1,0 @@
-# !/bin/bash
-
-# A simple script to cancel the current mission.
-
-rostopic pub -1 /mission/cancel actionlib_msgs/GoalID "stamp:
-  secs: 0
-  nsecs: 0
-id: ''" 
-

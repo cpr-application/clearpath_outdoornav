@@ -1,0 +1,20 @@
+# The robot's current latitude (decimal degrees)
+float64 latitude
+
+# The robot's current longitude (decimal degrees)
+float64 longitude
+
+# The robot's current heading (cardinal direction in decimal degrees)
+float64 heading
+
+# The robot's current linear & angular velocity
+geometry_msgs/Twist velocity
+
+# The robot's current odometry location
+nav_msgs/Odometry odometry
+
+# Tags for the event
+# Should contain one or more of Event.TAG_LOCATION, TAG_ODOMETRY, or TAG_VELOCITY
+string[] tags
+---
+clearpath_logger_msgs/Event event

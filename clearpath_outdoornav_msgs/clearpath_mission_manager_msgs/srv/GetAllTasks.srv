@@ -1,0 +1,3 @@
+---
+# The array of all Tasks defined in the database
+clearpath_navigation_msgs/Task[] tasks

@@ -1,0 +1,7 @@
+# The event to be recorded
+# If the header's stamp is not zero the header will be modified to be the current time
+# Otherwise the provided time will be used without verification
+clearpath_logger_msgs/Event event
+---
+# The event as it was recorded, after any modifications made for serialization
+clearpath_logger_msgs/Event event

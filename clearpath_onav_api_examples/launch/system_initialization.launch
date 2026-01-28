@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-   <node pkg="clearpath_onav_api_examples" type="system_initialization" name="system_initialization" output="screen" respawn="false">
-   </node>
-</launch>

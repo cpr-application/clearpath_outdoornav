@@ -1,0 +1,5 @@
+# The UUID of the Waypoint we want to retrieve
+string uuid
+---
+# The Waypoint with the given ID, or null if no Waypoint with that ID exists
+clearpath_navigation_msgs/Waypoint waypoint

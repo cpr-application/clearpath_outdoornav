@@ -1,0 +1,3 @@
+---
+# An array of all Missions defined in the database
+clearpath_navigation_msgs/NetworkMission[] missions
