@@ -1,8 +1,0 @@
-# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
-
-bool enable_path_shifter
-float32 path_shift_offset
-float32 path_shift_time
----
-bool success
-string message

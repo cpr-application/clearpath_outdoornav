@@ -12,10 +12,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 rosidl_generate_interfaces(
     ${PROJECT_NAME}
-        action/SurveyBaseStation.action
         msg/GNSSStatus.msg
         msg/LocalizationStatus.msg
-        msg/SurveyProperties.msg
         msg/XvnStatus.msg
         srv/ConvertCartesianToLatLon.srv
         srv/ConvertCartesianToLatLonArray.srv

@@ -24,4 +24,4 @@ float64 position_tolerance
 float64 yaw_tolerance
 
 # The ordered set of Tasks to execute once the goal position & orientation are reached
-clearpath_navigation_msgs/Task[] tasks
+clearpath_task_msgs/Task[] tasks

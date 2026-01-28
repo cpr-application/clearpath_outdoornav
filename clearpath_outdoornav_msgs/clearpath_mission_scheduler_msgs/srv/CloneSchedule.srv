@@ -1,9 +1,0 @@
-# The UUID of the schedule to clone
-string uuid
-
-# The name for the new copy of the schedule
-string new_name
----
-# The cloned schedule
-# This should be identical to the original, but with a new name and new UUID
-clearpath_mission_scheduler_msgs/Schedule schedule

@@ -1,7 +1,0 @@
-# Service definition to enable/disable the delay compensation feature. If enabling, the delay to compensate for must be specified in the request.
-
-bool enable_delay_compensation
-uint16 delay
----
-bool success
-string message

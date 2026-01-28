@@ -1,0 +1,4 @@
+clearpath_task_msgs/Task task
+---
+bool success
+string message

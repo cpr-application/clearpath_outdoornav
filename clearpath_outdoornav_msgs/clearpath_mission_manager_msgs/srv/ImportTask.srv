@@ -1,0 +1,5 @@
+string task_json
+---
+bool success
+string message
+clearpath_task_msgs/Task task

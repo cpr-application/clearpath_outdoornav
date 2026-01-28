@@ -1,7 +1,0 @@
-# Service definition to enable/disable the stop distance. If enabling, the stop distance must be specified in the request.
-
-bool enable_stop_distance
-float32 stop_distance
----
-bool success
-string message

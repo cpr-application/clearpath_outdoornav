@@ -10,9 +10,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 rosidl_generate_interfaces(
     ${PROJECT_NAME}
-        msg/AssistedTeleopState.msg
-        msg/ObstacleMap.msg
-        msg/Safety.msg
         msg/WatchdogConfigArray.msg
         msg/WatchdogConfigCommon.msg
         msg/WatchdogConfigCommunication.msg

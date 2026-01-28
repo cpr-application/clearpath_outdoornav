@@ -10,11 +10,11 @@ string uuid
 clearpath_navigation_msgs/Waypoint[] waypoints
 
 # An array of Tasks to execute on Mission start
-clearpath_navigation_msgs/Task[] on_start
+clearpath_task_msgs/Task[] on_start
 
 # An array of Tasks to execute on Mission stop
 # These Tasks will execute regardless of mission success or failure
-clearpath_navigation_msgs/Task[] on_stop
+clearpath_task_msgs/Task[] on_stop
 
 # Boolean value indicating whether robot should attempt 'return to dock' behavior
 # when battery level drops below return_to_dock_battery_level

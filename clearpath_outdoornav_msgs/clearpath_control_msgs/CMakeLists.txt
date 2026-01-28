@@ -9,7 +9,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 rosidl_generate_interfaces(
     ${PROJECT_NAME}
-        msg/AutonomySync.msg
         msg/ControlMode.msg
         msg/ControlSelectionState.msg
         msg/ControlState.msg

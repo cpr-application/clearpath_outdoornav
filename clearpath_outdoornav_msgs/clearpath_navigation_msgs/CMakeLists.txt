@@ -6,6 +6,7 @@ project(clearpath_navigation_msgs)
 find_package(rosidl_default_generators REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(builtin_interfaces REQUIRED)
+find_package(clearpath_task_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
@@ -15,44 +16,29 @@ rosidl_generate_interfaces(
     ${PROJECT_NAME}
         action/ExecuteMissionByUuid.action
         action/ExecuteNetworkGoTo.action
+        action/ExecuteNetworkGoToPOI.action
         action/ExecuteNetworkMissionByUuid.action
         action/ExecuteNetworkMissionFromGoal.action
-        action/GetWaypointPath.action
+        action/InspectPoi.action
         action/Mission.action
         action/RecordPath.action
-        action/SmoothPath.action
-        action/UITask.action
+        msg/AutonomyConfig.msg
         msg/AutonomyStatus.msg
-        msg/DistanceToGoal.msg
-        msg/Metrics.msg
         msg/Mission.msg
         msg/MissionStatus.msg
-        msg/MotionState.msg
-        msg/NavigationState.msg
         msg/NetworkEdge.msg
         msg/NetworkGoalState.msg
         msg/NetworkMap.msg
         msg/NetworkMission.msg
         msg/NetworkMissionSegment.msg
         msg/NetworkPoint.msg
-        msg/OdomIntent.msg
         msg/PointOfInterest.msg
-        msg/PointVector.msg
-        msg/Progress.msg
-        msg/ScanPoints.msg
         msg/MissionPreview.msg
         msg/GoToPreview.msg
-        msg/Task.msg
-        msg/TrackError.msg
-        msg/Vector2D.msg
         msg/Vector2D64.msg
         msg/Waypoint.msg
         msg/WaypointStatus.msg
-        srv/AutonomyTaskSrv.srv
-        srv/SetDelayCompensation.srv
-        srv/SetPathShifter.srv
-        srv/SetPathSmoother.srv
-        srv/SetStopDistance.srv
+        srv/Q62AreaZoom.srv
         srv/StartGoToPreviewer.srv
         srv/StartMissionPreviewer.srv
     DEPENDENCIES
@@ -60,6 +46,7 @@ rosidl_generate_interfaces(
         geometry_msgs
         nav_msgs
         std_msgs
+        clearpath_task_msgs
 )
 
 ament_package()

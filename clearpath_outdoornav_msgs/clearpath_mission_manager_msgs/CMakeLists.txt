@@ -4,6 +4,8 @@ project(clearpath_mission_manager_msgs)
 find_package(rosidl_default_generators REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(clearpath_navigation_msgs REQUIRED)
+find_package(clearpath_task_msgs REQUIRED)
+
 set(CMAKE_CXX_STANDARD 17)
 
 rosidl_generate_interfaces(
@@ -49,6 +51,7 @@ rosidl_generate_interfaces(
         srv/ImportMission.srv
         srv/ImportNetworkMap.srv
         srv/ImportNetworkMission.srv
+        srv/ImportTask.srv
         srv/SplitNetworkEdge.srv
         srv/UpdateMission.srv
         srv/UpdateNetworkEdge.srv
@@ -63,6 +66,7 @@ rosidl_generate_interfaces(
         srv/ValidateNetworkMap.srv
     DEPENDENCIES
         clearpath_navigation_msgs
+        clearpath_task_msgs
 )
 
 ament_package()

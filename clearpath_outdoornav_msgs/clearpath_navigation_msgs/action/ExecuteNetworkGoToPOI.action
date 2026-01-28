@@ -1,0 +1,29 @@
+# Action definition for sending a GoTo POI to the Clearpath OutdoorNav software
+
+# goal
+string poi_uuid
+string map_uuid
+
+---
+# result
+
+uint8 UNKNOWN = 0
+uint8 CANCELLED = 1
+uint8 COLLISION = 2
+uint8 PLANNING = 3
+uint8 START_TASKS = 4
+uint8 END_TASKS = 5
+uint8 MISSION_TASKS = 6
+uint8 code
+
+bool success
+string message
+uint16 NONE=0
+uint16 error_code
+string error_msg
+
+---
+# feedback
+string message
+clearpath_navigation_msgs/NetworkMissionSegment network_plan
+float32 elapsed_time

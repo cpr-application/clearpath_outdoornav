@@ -16,6 +16,7 @@
   <buildtool_depend>rosidl_default_generators</buildtool_depend>
 
   <depend>clearpath_navigation_msgs</depend>
+  <depend>clearpath_task_msgs</depend>
   <exec_depend>rosidl_default_runtime</exec_depend>
 
   <export>

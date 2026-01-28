@@ -1,24 +1,11 @@
-# The UUID of the Task to edit
 string uuid
-
-# The human-readable name for the Task
 string name
-
-# The ROS Action that the Task executes
-string action_server_name
-
-# The version of the Task
-string version
-
-# The numerical data to pass to the action_server_name
-float64[] floats
-
-# The string data to pass to the action_server_name
-string[] strings
-
-# Boolean value which determines whether a mission using this task can continue
-# if this task fails to execute
+string task_type
+string task_category
+string server_name
+string payload
+bool required
 bool allow_failure
+float64 timeout
 ---
-# The edited Task, or null if no Task with the given ID exists
-clearpath_navigation_msgs/Task result
+clearpath_task_msgs/Task result
