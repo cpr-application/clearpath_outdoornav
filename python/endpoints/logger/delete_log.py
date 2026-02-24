@@ -6,6 +6,7 @@ from clearpath_logger_msgs.srv import DeleteLog
 ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'DeleteLog'
 
+# enter the log uuid to be deleted
 LOG_ID: str = ''
 
 class Logger(Node):

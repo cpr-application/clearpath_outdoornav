@@ -6,7 +6,7 @@
 #include <memory>
 #include <yaml-cpp/yaml.h>
 
-const std::string DOCK_NAME = "lma02_doghouse_dock";
+const std::string DOCK_NAME = "";
 const double TIMEOUT = 30.0;
 
 using namespace std::chrono_literals;
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
   {
     if (result.get()->success)
     {
-      RCLCPP_INFO(rclcpp::get_logger("survey_dock_client"), "Surveyed dock succesfully!");
+      RCLCPP_INFO(rclcpp::get_logger("survey_dock_client"), "Surveyed dock successfully!");
     }
     else
     {

@@ -6,8 +6,9 @@
 #include <memory>
 #include <yaml-cpp/yaml.h>
 
-const double DATUM_LAT = 43.5009;
-const double DATUM_LON = -80.5474;
+// enter your datum latitude/longitude
+const double DATUM_LAT = ;
+const double DATUM_LON = ;
 
 using namespace std::chrono_literals;
 

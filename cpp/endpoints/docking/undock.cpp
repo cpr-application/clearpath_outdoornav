@@ -11,7 +11,7 @@
 #include "rclcpp_components/register_node_macro.hpp"
 
 // TODO: Enter your dock name
-const std::string DOCK_NAME = "lma02_doghouse_dock";
+const std::string DOCK_NAME = "";
 
 namespace undock_action_client
 {

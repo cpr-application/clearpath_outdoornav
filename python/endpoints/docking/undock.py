@@ -8,7 +8,7 @@ from rclpy.node import Node
 ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'Undock'
 
-# TODO: Enter your mission and map uuids
+# TODO: Enter your dock name
 DOCK_NAME: str = ''
 
 

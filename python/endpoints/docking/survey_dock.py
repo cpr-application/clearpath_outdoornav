@@ -7,7 +7,7 @@ ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'SurveyDock'
 
 # TODO: Enter your dock info
-DOCK_NAME: str = 'lma02_doghouse_dock'
+DOCK_NAME: str = ''
 TIMEOUT: float = 30.0
 
 

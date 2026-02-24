@@ -10,9 +10,9 @@
 #include "rclcpp_action/rclcpp_action.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
 
-// TODO: Enter your dock name and map id
-const std::string DOCK_NAME = "lma02_doghouse_dock";
-const std::string MAP_ID = "02227f12-a32b-45d0-9d34-c90b6e50d49c";
+// TODO: Enter your dock name and map uuid
+const std::string DOCK_NAME = "";
+const std::string MAP_ID = "";
 
 namespace map_dock_action_client
 {

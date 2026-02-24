@@ -10,7 +10,7 @@
 #include "rclcpp_action/rclcpp_action.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
 
-// TODO: Enter your dock name
+// TODO: Enter your map uuid and your point of interest uuid
 const std::string MAP_ID = "";
 const std::string POI_ID = "";
 

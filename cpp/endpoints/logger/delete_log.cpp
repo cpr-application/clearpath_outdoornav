@@ -19,6 +19,7 @@ int main(int argc, char **argv)
   rclcpp::Client<clearpath_logger_msgs::srv::DeleteLog>::SharedPtr client =
     node->create_client<clearpath_logger_msgs::srv::DeleteLog>("/" + namespace_ + "/" + std::string("log_manager/delete_log"));
 
+  // enter the log uuid to delete
   auto request = std::make_shared<clearpath_logger_msgs::srv::DeleteLog::Request>();
   request->uuid = "";
   request->delete_media = False;

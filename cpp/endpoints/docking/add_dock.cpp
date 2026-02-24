@@ -19,6 +19,7 @@ int main(int argc, char **argv)
   rclcpp::Client<clearpath_dock_msgs::srv::AddDock>::SharedPtr client =
     node->create_client<clearpath_dock_msgs::srv::AddDock>("/" + namespace_ + "/" + std::string("docking/dock_manager/add_dock"));
 
+  // add your dock info (name, latitude, longitude, and orientation as a quaternion)
   auto request = std::make_shared<clearpath_dock_msgs::srv::AddDock::Request>();
   auto dock_info = clearpath_dock_msgs::msg::DockInfo();
   dock_info.name = "";
@@ -45,7 +46,7 @@ int main(int argc, char **argv)
   {
     if (result.get()->success)
     {
-      RCLCPP_INFO(rclcpp::get_logger("add_dock_client"), "Added dock succesfully!");
+      RCLCPP_INFO(rclcpp::get_logger("add_dock_client"), "Added dock successfully!");
     }
     else
     {

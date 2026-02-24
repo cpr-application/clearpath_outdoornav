@@ -8,7 +8,7 @@ from rclpy.node import Node
 ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'ExecuteGoToPOI'
 
-# TODO: Enter your map and poi uuid
+# TODO: Enter your map uuid and point of interest uuid
 MAP_ID: str = ''
 POI_ID: str = ''
 

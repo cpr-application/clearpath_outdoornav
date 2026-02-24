@@ -8,7 +8,7 @@ from rclpy.node import Node
 ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'AddDock'
 
-# TODO: Enter your dock info
+# TODO: Enter your dock info (name, latitude, longitude and orientation as a Quaternion)
 DOCK_INFO = DockInfo(
             name='',
             dock_template='a300_side_dock',
