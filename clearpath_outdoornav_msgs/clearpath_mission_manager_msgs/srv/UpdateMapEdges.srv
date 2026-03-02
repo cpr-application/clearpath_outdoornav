@@ -17,6 +17,8 @@ float32[] speed_limits
 # The cost factors of the edges
 float32[] cost_factors
 
+# Array of if each edge allows reverse paths
+bool[] allow_reverses
 ---
 
 # The updated edge

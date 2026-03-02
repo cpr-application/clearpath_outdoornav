@@ -24,3 +24,5 @@ float32 speed_limit
 # Expected range is (0.0, 100.0] (i.e. 0 < cost_factor <= 100).
 # Values outside the expected range will be treated as the default 1.0
 float32 cost_factor
+
+bool allow_reverse

@@ -4,3 +4,5 @@ string end_point_id
 float32 speed_limit
 
 float32 radius
+
+bool allow_reverse

@@ -17,6 +17,8 @@ float32 speed_limit
 # Values outside the expected range will be treated as the default 1.0
 float32 cost_factor
 
+bool allow_reverse
+
 # If true, we add 2 edges, with the second one having inverted start and end points
 bool symmetrical
 

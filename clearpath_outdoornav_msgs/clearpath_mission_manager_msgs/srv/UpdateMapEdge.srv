@@ -1,7 +1,7 @@
 # The UUID of the map we're operating on
 string map_id
 
-# The UUIDs of the start and end points for this edge
+# The UUID of the edge
 string uuid
 
 # The UUIDs of the start & end points of the edge we're editing
@@ -20,6 +20,8 @@ float32 speed_limit
 # Expected range is (0.0, 100.0) (exclusive range).
 # Values outside the expected range will be treated as the default 1.0
 float32 cost_factor
+
+bool allow_reverse
 
 ---
 
