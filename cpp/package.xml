@@ -13,7 +13,9 @@
   <depend>clearpath_outdoornav_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
+  <depend>rclcpp</depend>
   <depend>std_srvs</depend>
+  <depend>yaml_cpp_vendor</depend>
 
   <export>
     <build_type>ament_python</build_type>

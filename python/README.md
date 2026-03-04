@@ -20,9 +20,7 @@ cd ~/onav_ws/ && colcon build --packages-up-to clearpath_outdoornav_msgs
 cd ~/onav_ws/ && colcon build --packages-up-to clearpath_outdoornav_python_api
 ```
 
-## Run
-
-### API Endpoint Example
+### Run API Endpoint Example
 
 ```
 source ~/onav_ws/install/setup.bash
@@ -31,9 +29,7 @@ ros2 run clearpath_outdoornav_python_api <endpoint_example>
 
 where <example_endpoint> is the name of one of the endpoint examples (See [setup.py](setup.py) for the list of all available endpoint and application examples)
 
-## Run
-
-### API Application Example
+### Run API Application Example
 
 ```
 source ~/onav_ws/install/setup.bash
