@@ -53,7 +53,7 @@ target_link_libraries(cpp_client
 add_executable(execute_task_action
   endpoints/autonomy/execute_task_action.cpp
 )
-target_include_directories(cexecute_task_actiont PUBLIC include)
+target_include_directories(execute_task_action PUBLIC include)
 ament_target_dependencies(execute_task_action ${dependencies})
 target_link_libraries(execute_task_action
   yaml-cpp::yaml-cpp
