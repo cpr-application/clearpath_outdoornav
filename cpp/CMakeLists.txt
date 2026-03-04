@@ -240,10 +240,10 @@ target_link_libraries(stop_recording
   yaml-cpp::yaml-cpp
 )
 
-install(
-  DIRECTORY include/
-  DESTINATION include/${PROJECT_NAME}
-)
+# install(
+#   DIRECTORY include/
+#   DESTINATION include/${PROJECT_NAME}
+# )
 
 install(TARGETS 
   execute_task_action
@@ -268,9 +268,9 @@ install(TARGETS
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
-ament_export_include_directories(
-  "include/${PROJECT_NAME}"
-)
+# ament_export_include_directories(
+#   "include/${PROJECT_NAME}"
+# )
 
 ament_export_dependencies(
   ${dependencies}
