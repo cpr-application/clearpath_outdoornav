@@ -181,14 +181,14 @@ target_link_libraries(undock
 )
 
 # Monitor Localization
-add_executable(monitor_location
-  endpoints/localization/monitor_location.cpp
-)
-target_include_directories(monitor_location PUBLIC include)
-ament_target_dependencies(monitor_location ${dependencies})
-target_link_libraries(monitor_location
-  yaml-cpp::yaml-cpp
-)
+# add_executable(monitor_location
+#   endpoints/localization/monitor_location.cpp
+# )
+# target_include_directories(monitor_location PUBLIC include)
+# ament_target_dependencies(monitor_location ${dependencies})
+# target_link_libraries(monitor_location
+#   yaml-cpp::yaml-cpp
+# )
 
 # Set Datum
 add_executable(set_datum
@@ -250,7 +250,7 @@ install(TARGETS
   map_dock
   survey_dock
   undock
-  monitor_location
+#   monitor_location
   set_datum
   delete_log
   start_recording
