@@ -12,8 +12,8 @@ LOGGING_NAME = 'AddDock'
 DOCK_INFO = DockInfo(
             name='',
             dock_template='a300_side_dock',
-            latitude=,
-            longitude=,
+            latitude=0.0,
+            longitude=0.0,
             orientation=Quaternion()
 )
 
