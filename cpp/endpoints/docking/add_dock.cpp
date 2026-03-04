@@ -24,9 +24,9 @@ int main(int argc, char **argv)
   auto dock_info = clearpath_dock_msgs::msg::DockInfo();
   dock_info.name = "";
   dock_info.dock_template = "a300_side_dock";
-  dock_info.latitude = ;
-  dock_info.longitude = ;
-  dock_info.orientation = ;
+  dock_info.latitude = 0.0;
+  dock_info.longitude = 0.0;
+  dock_info.orientation = 0.0;
 
   request->dock = dock_info;
 

@@ -14,9 +14,9 @@
 const std::string MAP_ID = "";
 const std::string WAYPOINT_ID = "";
 const std::string WAYPOINT_NAME = "";
-const double WAYPOINT_LAT = ;
-const double WAYPOINT_LON = ;
-const double WAYPOINT_HEADING = ;
+const double WAYPOINT_LAT = 0.0;
+const double WAYPOINT_LON = 0.0;
+const double WAYPOINT_HEADING = 0.0;
 const double WAYPOINT_POSITION_TOLERANCE = -1.0;  // -1.0 means off
 const double WAYPOINT_YAW_TOLERANCE = -1.0;       // -1.0 means off
 

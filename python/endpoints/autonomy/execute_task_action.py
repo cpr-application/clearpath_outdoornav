@@ -60,7 +60,7 @@ class ExecuteTaskActionClient(Node):
 
     def task_feedback_cb(self, feedback_msg):
         feedback = feedback_msg.feedback
-        self.get_logger().info(f'[{LOGGING_NAME}] Task has been running for: {feedback.elapsed_time:.2f}s', throttle_duration_sec=60)
+        self.get_logger().info(f'[{LOGGING_NAME}] Task has been running for: {feedback.time_elapsed:.2f}s', throttle_duration_sec=60)
 
     def task_cancel_response_cb(self, future):
         cancel_response = future.result()
