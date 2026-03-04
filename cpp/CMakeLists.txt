@@ -40,15 +40,6 @@ include_directories(SYSTEM
   ${YAML_CPP_LIBRARIES}
 )
 
-add_executable(cpp_client
-  src/api_endpoint.cpp
-)
-target_include_directories(cpp_client PUBLIC include)
-ament_target_dependencies(cpp_client ${dependencies})
-target_link_libraries(cpp_client
-  yaml-cpp::yaml-cpp
-)
-
 # Execute Task Action
 add_executable(execute_task_action
   endpoints/autonomy/execute_task_action.cpp
@@ -245,8 +236,25 @@ install(
 )
 
 install(TARGETS 
-  cpp_client
-
+  execute_task_action
+  execute_task_srv
+  goto_poi
+  goto
+  mission_from_goal
+  mission
+  pause_autonomy
+  resume_autonomy
+  stop_autonomy
+  add_dock
+  local_dock
+  map_dock
+  survey_dock
+  undock
+  monitor_localization
+  set_datum
+  delete_log
+  start_recording
+  stop_recording
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
