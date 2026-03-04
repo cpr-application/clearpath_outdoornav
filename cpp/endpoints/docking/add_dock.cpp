@@ -26,7 +26,12 @@ int main(int argc, char **argv)
   dock_info.dock_template = "a300_side_dock";
   dock_info.latitude = 0.0;
   dock_info.longitude = 0.0;
-  dock_info.orientation = 0.0;
+  geometry_msgs::msg::Quaternion orientation;
+  orientation.x = 0.0;
+  orientation.y = 0.0;
+  orientation.z = 0.0;
+  orientation.w = 1.0;
+  dock_info.orientation = orientation;
 
   request->dock = dock_info;
 
