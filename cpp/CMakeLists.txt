@@ -8,9 +8,14 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(clearpath_control_msgs REQUIRED)
 find_package(clearpath_dock_msgs REQUIRED)
 find_package(clearpath_localization_msgs REQUIRED)
+find_package(clearpath_logger_msgs REQUIRED)
+find_package(clearpath_mission_manager_msgs REQUIRED)
 find_package(clearpath_navigation_msgs REQUIRED)
+find_package(clearpath_safety_msgs REQUIRED)
+find_package(clearpath_task_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
@@ -21,9 +26,14 @@ find_package(yaml_cpp_vendor REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
 set(dependencies
+  clearpath_control_msgs
   clearpath_dock_msgs
   clearpath_localization_msgs
+  clearpath_logger_msgs
+  clearpath_mission_manager_msgs
   clearpath_navigation_msgs
+  clearpath_safety_msgs
+  clearpath_task_msgs
   geometry_msgs
   nav_msgs
   rclcpp
@@ -266,7 +276,5 @@ ament_export_dependencies(
   ${dependencies}
   yaml-cpp
 )
-
-#rclcpp_components_register_node(cpp_client PLUGIN "goto_poi_action_client::ExecuteGoToPOIActionClient" EXECUTABLE api_endpoint)
 
 ament_package()
