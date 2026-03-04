@@ -9,15 +9,19 @@
 
   <license>Clearpath Proprietary</license>
 
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
   <depend>action_msgs</depend>
   <depend>clearpath_outdoornav_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
   <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>rclcpp_components</depend>
   <depend>std_srvs</depend>
   <depend>yaml_cpp_vendor</depend>
 
   <export>
-    <build_type>ament_python</build_type>
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
