@@ -22,8 +22,8 @@ int main(int argc, char **argv)
   // enter the log uuid to delete
   auto request = std::make_shared<clearpath_logger_msgs::srv::DeleteLog::Request>();
   request->uuid = "";
-  request->delete_media = False;
-  request->purge_record = False;
+  request->delete_media = false;
+  request->purge_record = false;
 
 while (!client->wait_for_service(2s)) {
     if (!rclcpp::ok()) {
