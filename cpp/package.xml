@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>clearpath_outdoornav_cpp_api</name>
-  <version>2.2.0</version>
+  <version>2.3.0</version>
   <description>The Clearpath OutdoorNav C++ API package</description>
 
   <author email="jmastrangelo@clearpathrobotics.com">José Mastrangelo</author>
