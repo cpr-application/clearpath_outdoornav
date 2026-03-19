@@ -82,28 +82,27 @@ class MissionWithMonitoring(Node):
         self._mission_goal_handle = self._mission_executor._mission_goal_handle
         self._mission_goal_cancelled = self._mission_executor._mission_goal_cancelled
 
+        if self._mission_completed:
+            self.get_logger().info(f'[{LOGGING_NAME}] Mission completed!')
+            self.destroy_node()
+            rclpy.shutdown()
+            return
+
         if not self._mission_running:
             if not self._mission_started:
                 self.get_logger().info(f'[{LOGGING_NAME}] Starting mission')
                 self._mission_executor._mission_running = True
                 self._mission_executor.send_mission_goal(LOOP_TEST_MISSION_ID, LOOP_TEST_MAP_ID)
         else:
-            self.get_logger().info(f'[{LOGGING_NAME}] Starting mission', throttle_duration_sec=10.0)
             self.get_logger().info(f"""[{LOGGING_NAME}]
-            --- Report ---
-            Current Goal ID: {self._currrent_goal_id}
-            Robot Location (lat/lon): ({self._robot_fix[0]}/{self._robot_fix[0]})
-            Battery Charge (%): {self._battery_charge}
-            Motor State: {self._motor_states}
-            Autonomy State: {self._autonomy_state}
-            Autonomy Paused: {self._autonomy_paused}
-            """, throttle_duration_sec=10.0)
-
-        if self._mission_completed:
-            self.get_logger().info(f'[{LOGGING_NAME}] Mission completed!')
-            self.destroy_node()
-            rclpy.shutdown()
-            return
+--- Report ---
+Current Goal ID: {self._currrent_goal_id}
+Robot Location (lat/lon): ({self._robot_fix[0]}/{self._robot_fix[0]})
+Battery Charge (%): {self._battery_charge*100}
+Motor State: {self._motor_states}
+Autonomy State: {self._autonomy_state}
+Autonomy Paused: {self._autonomy_paused}
+""", throttle_duration_sec=10.0)
 
 
 def main(args=None):
