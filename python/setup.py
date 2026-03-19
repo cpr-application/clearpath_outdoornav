@@ -25,6 +25,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            ## Endpoint entry points
             'execute_task_action = endpoints.autonomy.execute_task_action:main',
             'execute_task_srv = endpoints.autonomy.execute_task_srv:main',
             'goto_poi = endpoints.autonomy.goto_poi:main',
@@ -43,6 +44,7 @@ setup(
             'delete_log = endpoints.logger.delete_log:main',
             'start_recording = endpoints.logger.start_recording:main',
             'stop_recording = endpoints.logger.stop_recording:main',
+            ## Example entry points
             'mission_looped = examples.mission_looped:main',
             'mission_w_monitoring = examples.mission_w_monitoring:main',
         ],
