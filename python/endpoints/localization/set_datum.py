@@ -7,8 +7,8 @@ ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'SetDatum'
 
 # TODO: Enter your datum latitude/longitude
-DATUM_LATITUDE: float =
-DATUM_LONGITUDE: float =
+DATUM_LATITUDE: float = 0.0
+DATUM_LONGITUDE: float = 0.0
 
 
 class SetDatumCLient(Node):

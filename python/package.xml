@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>clearpath_outdoornav_python_api</name>
+  <version>2.3.0</version>
+  <description>The Clearpath OutdoorNav Python API package</description>
+
+  <author email="jmastrangelo@clearpathrobotics.com">José Mastrangelo</author>
+  <maintainer email="jmastrangelo@clearpathrobotics.com">José Mastrangelo</maintainer>
+
+  <license>Clearpath Proprietary</license>
+
+  <depend>action_msgs</depend>
+  <depend>clearpath_outdoornav_api_lib</depend>
+  <depend>clearpath_outdoornav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>rclpy</depend>
+  <depend>std_srvs</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

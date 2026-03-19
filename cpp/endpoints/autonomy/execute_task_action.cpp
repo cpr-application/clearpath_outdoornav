@@ -65,7 +65,7 @@ public:
       GoalHandleExecuteTask::SharedPtr,
       const std::shared_ptr<const ExecuteTask::Feedback> feedback)
     {
-      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 60000, "Task has been running for: %.3f", feedback->elapsed_time);
+      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 60000, "Task has been running for: %.2f", feedback->time_elapsed);
     };
 
     send_goal_options.result_callback = [this](const GoalHandleExecuteTask::WrappedResult & result)

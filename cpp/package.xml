@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>clearpath_outdoornav_cpp_api</name>
+  <version>2.3.0</version>
+  <description>The Clearpath OutdoorNav C++ API package</description>
+
+  <author email="jmastrangelo@clearpathrobotics.com">José Mastrangelo</author>
+  <maintainer email="jmastrangelo@clearpathrobotics.com">José Mastrangelo</maintainer>
+
+  <license>Clearpath Proprietary</license>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <depend>action_msgs</depend>
+  <depend>clearpath_outdoornav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>rclcpp_components</depend>
+  <depend>std_srvs</depend>
+  <depend>yaml_cpp_vendor</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
