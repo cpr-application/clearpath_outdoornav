@@ -43,6 +43,8 @@ setup(
             'delete_log = endpoints.logger.delete_log:main',
             'start_recording = endpoints.logger.start_recording:main',
             'stop_recording = endpoints.logger.stop_recording:main',
+            'mission_looped = examples.mission_looped:main',
+            'mission_w_monitoring = examples.mission_w_monitoring:main',
         ],
     },
 )
