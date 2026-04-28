@@ -17,7 +17,7 @@ class ExecuteTaskActionClient(Node):
     def __init__(self, namespace: str):
         super().__init__('execute_task')
         self._namespace = namespace
-        self._action_client = ActionClient(self, ExecuteTask, f'/{self._namespace}/execute_task')
+        self._action_client = ActionClient(self, ExecuteTask, f'/{self._namespace}/autonomy/task/execute_action')
         self._task_goal_handle = None
         self._task_goal_cancelled = False
         self._task_running = False
@@ -33,7 +33,7 @@ class ExecuteTaskActionClient(Node):
         goal_msg.task_id = task_id
 
         if not self._action_client.wait_for_server(timeout_sec=5.0):
-            self.get_logger().error(f'[{LOGGING_NAME}] /{self._namespace}/execute_task action server not available!')
+            self.get_logger().error(f'[{LOGGING_NAME}] /{self._namespace}/autonomy/task/execute_action action server not available!')
             self.destroy_node()
             rclpy.shutdown()
             return
