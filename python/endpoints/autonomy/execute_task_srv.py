@@ -14,10 +14,10 @@ class ExecuteTaskSrv(Node):
 
     def __init__(self, namespace: str):
         super().__init__('execute_task_srv')
-        self._execute_task_srv_client = self.create_client(ExecuteTask, f'/{namespace}/execute_task')
+        self._execute_task_srv_client = self.create_client(ExecuteTask, f'/{namespace}/autonomy/task/execute_srv')
 
         while not self._execute_task_srv_client.wait_for_service(timeout_sec=2.0):
-            self.get_logger().info(f'[{LOGGING_NAME}] /{namespace}/execute_task service not available, waiting again...')
+            self.get_logger().info(f'[{LOGGING_NAME}] /{namespace}/autonomy/task/execute_srv service not available, waiting again...')
 
     def execute_task(self):
         req = ExecuteTask.Request()

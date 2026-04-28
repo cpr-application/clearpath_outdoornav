@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 
   std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("execute_task_srv_client");
   rclcpp::Client<clearpath_task_msgs::srv::ExecuteTask>::SharedPtr client =
-    node->create_client<clearpath_task_msgs::srv::ExecuteTask>("/" + namespace_ + "/" + std::string("execute_task"));
+    node->create_client<clearpath_task_msgs::srv::ExecuteTask>("/" + namespace_ + "/" + std::string("autonomy/task/execute_srv"));
 
   auto request = std::make_shared<clearpath_task_msgs::srv::ExecuteTask::Request>();
   request->task_id = TASK_ID;
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
       RCLCPP_ERROR(rclcpp::get_logger("execute_task_srv_client"), "Interrupted while waiting for the service. Exiting.");
       return 0;
     }
-    RCLCPP_INFO(rclcpp::get_logger("execute_task_srv_client"), "/%s/execute_task service not available, waiting again...", namespace_.c_str());
+    RCLCPP_INFO(rclcpp::get_logger("execute_task_srv_client"), "/%s/autonomy/task/execute_srv service not available, waiting again...", namespace_.c_str());
   }
 
   auto result = client->async_send_request(request);
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
       RCLCPP_ERROR(rclcpp::get_logger("execute_task_srv_client"), "Failed to execute task!");
     }
   } else {
-    RCLCPP_ERROR(rclcpp::get_logger("execute_task_srv_client"), "Failed to call service /%s/execute_task", namespace_.c_str());
+    RCLCPP_ERROR(rclcpp::get_logger("execute_task_srv_client"), "Failed to call service /%s/autonomy/task/execute_srv", namespace_.c_str());
   }
 
   rclcpp::shutdown();

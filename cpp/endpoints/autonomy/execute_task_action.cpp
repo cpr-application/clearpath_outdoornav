@@ -29,7 +29,7 @@ public:
     namespace_ = robot_config["system"]["ros2"]["namespace"].as<std::string>();
 
     this->client_ptr_ = rclcpp_action::create_client<ExecuteTask>(
-      this, "/" + namespace_ + "/" + std::string("execute_task"));
+      this, "/" + namespace_ + "/" + std::string("autonomy/task/execute_action"));
 
     this->timer_ = this->create_wall_timer(
       std::chrono::milliseconds(500),
@@ -43,7 +43,7 @@ public:
     this->timer_->cancel();
 
     if (!this->client_ptr_->wait_for_action_server()) {
-      RCLCPP_ERROR(this->get_logger(), "%s/execute_task action server not available after waiting", namespace_.c_str());
+      RCLCPP_ERROR(this->get_logger(), "%s/autonomy/task/execute_action action server not available after waiting", namespace_.c_str());
       rclcpp::shutdown();
     }
 
@@ -78,7 +78,7 @@ public:
           }
           else
           {
-            RCLCPP_ERROR(this->get_logger(), "[Taskl Result] Succeeded! Result: Failed to execute task");
+            RCLCPP_ERROR(this->get_logger(), "[Task Goal Result] Succeeded! Result: Failed to execute task");
           }
           break;
         case rclcpp_action::ResultCode::ABORTED:
