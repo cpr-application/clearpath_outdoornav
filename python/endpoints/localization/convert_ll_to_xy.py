@@ -9,8 +9,8 @@ LOGGING_NAME = 'ConvertLatLonToCartesian'
 
 # TODO: Enter your lat/lon coordinates
 LAT_LON_MSG = NavSatFix(
-            latitude=,
-            longitude=,
+            latitude=0.0,
+            longitude=0.0,
 )
 
 class ConvertLatLonToCartesianNode(Node):
