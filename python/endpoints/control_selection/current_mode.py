@@ -2,7 +2,7 @@ from clearpath_config.common.utils.yaml import read_yaml
 import rclpy
 from rclpy.node import Node
 
-from clearpath_control_msgs.msg import ControlMode
+from clearpath_control_selection_msgs.msg import ControlMode
 
 ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'CurrentControlMode'

@@ -1,7 +1,7 @@
 from clearpath_config.common.utils.yaml import read_yaml
 import rclpy
 from rclpy.node import Node
-from std_srvs.srv import SetBool
+from std_srvs.srv import Trigger
 
 ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'PauseAutonomy'
@@ -11,14 +11,13 @@ class PauseAutonomy(Node):
 
     def __init__(self, namespace: str):
         super().__init__('pause_autonomy_client')
-        self._autonomy_pause_client = self.create_client(SetBool, f'/{namespace}/autonomy/pause')
+        self._autonomy_pause_client = self.create_client(Trigger, f'/{namespace}/autonomy/pause')
 
         while not self._autonomy_pause_client.wait_for_service(timeout_sec=2.0):
             self.get_logger().info(f'[{LOGGING_NAME}] /{namespace}/autonomy/pause service not available, waiting again...')
 
     def pause(self):
-        req = SetBool.Request()
-        req.data = True
+        req = Trigger.Request()
         self.future = self._autonomy_pause_client.call_async(req)
         self.future.add_done_callback(self.autonomy_pause_srv_response_cb)
 

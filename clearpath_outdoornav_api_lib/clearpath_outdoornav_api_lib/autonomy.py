@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
-from clearpath_control_msgs.msg import ControlState
+from clearpath_control_selection_msgs.msg import ControlState
 from clearpath_navigation_msgs.msg import AutonomyStatus
 from rclpy.node import Node
-from std_srvs.srv import SetBool, Trigger
+from std_srvs.srv import Trigger, Trigger
 
 LOGGING_NAME = 'Autonomy'
 
@@ -23,8 +23,8 @@ class Autonomy(Node):
         self.autonomy_status_cb  # prevent unused variable warning
         self._current_autonomy_state = AutonomyStatus.IDLE
 
-        self._autonomy_pause_client = self.node.create_client(SetBool, pause_srv)
-        self._autonomy_resume_client = self.node.create_client(SetBool, resume_srv)
+        self._autonomy_pause_client = self.node.create_client(Trigger, pause_srv)
+        self._autonomy_resume_client = self.node.create_client(Trigger, resume_srv)
         self._autonomy_stop_client = self.node.create_client(Trigger, stop_srv)
 
         self.control_state_sub = self.node.create_subscription(
@@ -47,14 +47,12 @@ class Autonomy(Node):
         return self._currently_paused
 
     def pause(self):
-        req = SetBool.Request()
-        req.data = True
+        req = Trigger.Request()
         self.future = self._autonomy_pause_client.call_async(req)
         self.future.add_done_callback(self.autonomy_pause_srv_response_cb)
 
     def resume(self):
-        req = SetBool.Request()
-        req.data = True
+        req = Trigger.Request()
         self.future = self._autonomy_resume_client.call_async(req)
         self.future.add_done_callback(self.autonomy_resume_srv_response_cb)
 

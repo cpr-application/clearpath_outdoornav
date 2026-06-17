@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(clearpath_control_msgs)
+project(clearpath_control_selection_msgs)
 
 ## Find catkin macros and libraries
 
