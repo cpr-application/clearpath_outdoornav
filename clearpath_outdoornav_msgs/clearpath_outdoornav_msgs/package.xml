@@ -11,7 +11,7 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>clearpath_control_msgs</exec_depend>
+  <exec_depend>clearpath_control_selection_msgs</exec_depend>
   <exec_depend>clearpath_dock_msgs</exec_depend>
   <exec_depend>clearpath_localization_msgs</exec_depend>
   <exec_depend>clearpath_logger_msgs</exec_depend>

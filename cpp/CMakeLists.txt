@@ -8,7 +8,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(clearpath_control_msgs REQUIRED)
+find_package(clearpath_control_selection_msgs REQUIRED)
 find_package(clearpath_dock_msgs REQUIRED)
 find_package(clearpath_localization_msgs REQUIRED)
 find_package(clearpath_logger_msgs REQUIRED)
@@ -26,7 +26,7 @@ find_package(yaml_cpp_vendor REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
 set(dependencies
-  clearpath_control_msgs
+  clearpath_control_selection_msgs
   clearpath_dock_msgs
   clearpath_localization_msgs
   clearpath_logger_msgs

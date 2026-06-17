@@ -1,6 +1,6 @@
 #include "rclcpp/rclcpp.hpp"
-#include "clearpath_control_msgs/srv/set_control_mode.hpp"
-#include "clearpath_control_msgs/msg/control_mode.hpp"
+#include "clearpath_control_selection_msgs/srv/set_control_mode.hpp"
+#include "clearpath_control_selection_msgs/msg/control_mode.hpp"
 
 #include <chrono>
 #include <cstdlib>
@@ -8,7 +8,7 @@
 #include <yaml-cpp/yaml.h>
 
 // enter your control mode
-const int CONTROL_MODE = clearpath_control_msgs::msg::ControlMode::MANUAL; // options: MANUAL, AUTONOMOUS, NEUTRAL. See clearpath_control_msgs/msg/ControlMode.msg for more details.
+const int CONTROL_MODE = clearpath_control_selection_msgs::msg::ControlMode::MANUAL; // options: MANUAL, AUTONOMOUS, NEUTRAL. See clearpath_control_selection_msgs/msg/ControlMode.msg for more details.
 
 using namespace std::chrono_literals;
 
@@ -20,10 +20,10 @@ int main(int argc, char **argv)
   std::string namespace_ = robot_config["system"]["ros2"]["namespace"].as<std::string>();
 
   std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("set_control_mode_client");
-  rclcpp::Client<clearpath_control_msgs::srv::SetControlMode>::SharedPtr client =
-    node->create_client<clearpath_control_msgs::srv::SetControlMode>("/" + namespace_ + "/" + std::string("control_selection/set_mode"));
+  rclcpp::Client<clearpath_control_selection_msgs::srv::SetControlMode>::SharedPtr client =
+    node->create_client<clearpath_control_selection_msgs::srv::SetControlMode>("/" + namespace_ + "/" + std::string("control_selection/set_mode"));
 
-  auto request = std::make_shared<clearpath_control_msgs::srv::SetControlMode::Request>();
+  auto request = std::make_shared<clearpath_control_selection_msgs::srv::SetControlMode::Request>();
   request->mode.mode = CONTROL_MODE;
 
   while (!client->wait_for_service(2s)) {

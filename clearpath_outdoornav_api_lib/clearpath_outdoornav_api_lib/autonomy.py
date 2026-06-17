@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from clearpath_control_msgs.msg import ControlState
+from clearpath_control_selection_msgs.msg import ControlState
 from clearpath_navigation_msgs.msg import AutonomyStatus
 from rclpy.node import Node
 from std_srvs.srv import SetBool, Trigger

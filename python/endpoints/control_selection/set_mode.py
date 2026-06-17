@@ -1,6 +1,6 @@
 from clearpath_config.common.utils.yaml import read_yaml
-from clearpath_control_msgs.srv import SetControlMode
-from clearpath_control_msgs.msg import ControlMode
+from clearpath_control_selection_msgs.srv import SetControlMode
+from clearpath_control_selection_msgs.msg import ControlMode
 import rclpy
 from rclpy.node import Node
 
@@ -8,7 +8,7 @@ ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'SetControlMode'
 
 # TODO: Enter your control mode
-CONTROL_MODE: int = ControlMode.MANUAL # options: MANUAL, AUTONOMOUS, NEUTRAL. See clearpath_control_msgs/msg/ControlMode.msg for more details.
+CONTROL_MODE: int = ControlMode.MANUAL # options: MANUAL, AUTONOMOUS, NEUTRAL. See clearpath_control_selection_msgs/msg/ControlMode.msg for more details.
 
 
 class SetControlModeClient(Node):
