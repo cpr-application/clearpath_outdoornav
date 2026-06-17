@@ -16,11 +16,10 @@ int main(int argc, char **argv)
   std::string namespace_ = robot_config["system"]["ros2"]["namespace"].as<std::string>();
 
   std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("resume_autonomy_client");
-  rclcpp::Client<std_srvs::srv::SetBool>::SharedPtr client =
-    node->create_client<std_srvs::srv::SetBool>("/" + namespace_ + "/" + std::string("autonomy/resume"));
+  rclcpp::Client<std_srvs::srv::Trigger>::SharedPtr client =
+    node->create_client<std_srvs::srv::Trigger>("/" + namespace_ + "/" + std::string("autonomy/resume"));
 
-  auto request = std::make_shared<std_srvs::srv::SetBool::Request>();
-  request->data = true;
+  auto request = std::make_shared<std_srvs::srv::Trigger::Request>();
 
   while (!client->wait_for_service(2s)) {
     if (!rclcpp::ok()) {
