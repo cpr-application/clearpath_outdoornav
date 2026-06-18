@@ -1,5 +1,5 @@
 #include "rclcpp/rclcpp.hpp"
-#include "std_srvs/srv/set_bool.hpp"
+#include "std_srvs/srv/trigger.hpp"
 
 #include <chrono>
 #include <cstdlib>
