@@ -1,0 +1,12 @@
+{
+  "mode": "client",
+  "connect": {
+    "endpoints": ["${ROBOT_ZENOH_ENDPOINT}"],
+    "timeout_ms": {"router": -1, "peer": -1, "client": -1},
+    "exit_on_failure": {"router": false, "peer": false, "client": false}
+  },
+  "scouting": {
+    "multicast": {"enabled": false},
+    "gossip": {"enabled": false}
+  }
+}
