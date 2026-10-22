@@ -2,11 +2,9 @@
 
 `connect_robot.sh` configures the current shell to talk to a robot over either Zenoh (`rmw_zenoh_cpp`) or Cyclone DDS (`rmw_cyclonedds_cpp`). The robot and the remote PC must use the same middleware and the same `ROS_DOMAIN_ID` (default `0`).
 
-All commands below must be run from inside the `onav-app/` folder. From the repository root:
-
-```bash
-onav
-```
+The commands below assume the workspace is `~/onav_ws` and this repository is at
+`~/onav_ws/src/onav-app/api`. The source and launch commands use full paths so they
+can be run from any working directory.
 
 ## Robot
 
@@ -46,13 +44,13 @@ Use these commands when the PC can directly reach the robot's network address. S
 export ROS_DOMAIN_ID=0  # Replace 0 with the robot's system.ros2.domain_id.
 
 # Zenoh
-source middleware/connect_robot.sh zenoh <robot-ip> [robot-hostname]
+source ~/onav_ws/src/onav-app/api/middleware/connect_robot.sh zenoh <robot-ip> [robot-hostname]
 
 # Cyclone DDS
-source middleware/connect_robot.sh cyclone_dds <robot-ip>
+source ~/onav_ws/src/onav-app/api/middleware/connect_robot.sh cyclone_dds <robot-ip>
 
 # Interactive (prompts for middleware and robot address)
-source middleware/connect_robot.sh
+source ~/onav_ws/src/onav-app/api/middleware/connect_robot.sh
 ```
 
 ### SSH-tunneled Zenoh connection
@@ -61,7 +59,7 @@ Use this option when the PC can SSH to a host that can reach the robot's Zenoh r
 
 ```bash
 export ROS_DOMAIN_ID=0  # Replace 0 with the robot's system.ros2.domain_id.
-source middleware/connect_robot.sh zenoh --ssh-tunnel robot@cpr-rooftop
+source ~/onav_ws/src/onav-app/api/middleware/connect_robot.sh zenoh --ssh-tunnel robot@cpr-rooftop
 ```
 
 The script opens a local forward at `127.0.0.1:7447` and configures Zenoh to use it. The SSH host must be able to reach the robot's router at `192.168.131.1:7447`. SSH key authentication is recommended; with password authentication, SSH prompts while establishing the tunnel.
@@ -70,7 +68,7 @@ Override defaults if needed; use another local port if port `7447` is already oc
 
 ```bash
 export ROS_DOMAIN_ID=0  # Replace 0 with the robot's system.ros2.domain_id.
-source middleware/connect_robot.sh zenoh --ssh-tunnel robot@cpr-rooftop \
+source ~/onav_ws/src/onav-app/api/middleware/connect_robot.sh zenoh --ssh-tunnel robot@cpr-rooftop \
   --ssh-port 1122 --router-ip 192.168.131.1 --local-port 17447
 ```
 
@@ -90,25 +88,54 @@ Both connection modes configure the current shell. The script:
 - for SSH-tunneled Zenoh, runs an SSH ControlMaster in the background,
 - detects the robot namespace from the topic list and exports `ROBOT_NAMESPACE`.
 
-Then launch RViz with the command the script prints. It loads `rviz/outdoornav.rviz` by default; override with `rviz_config:=<path>`.
+## Visualization
+
+Visualize OutdoorNav data from a remote PC with RViz2 or Foxglove. RViz2 uses the
+ROS middleware connection configured above; Foxglove connects to a Foxglove
+WebSocket bridge.
+
+### RViz2
+
+Install RViz2 on a PC with ROS 2 Jazzy:
 
 ```bash
-ros2 launch rviz/rviz_navigation.launch.py namespace:=$ROBOT_NAMESPACE
+sudo apt install ros-jazzy-rviz2
 ```
+
+Use either the [direct connection](#direct-connection) or
+[SSH-tunneled Zenoh connection](#ssh-tunneled-zenoh-connection) above. The robot
+and PC must use the same `ROS_DOMAIN_ID`.
+
+After sourcing the connector, launch RViz2 in the same shell:
+
+```bash
+ros2 launch ~/onav_ws/src/onav-app/api/rviz/rviz_navigation.launch.py namespace:=$ROBOT_NAMESPACE
+```
+
+The launch file loads [outdoornav.rviz](../rviz/outdoornav.rviz) by default and
+applies the detected robot namespace. No ROS package build is needed to launch
+this file by path. Override the config with `rviz_config:=/path/to/config.rviz`.
 
 ### Foxglove
 
-Foxglove connects to a Foxglove WebSocket bridge, not directly to Zenoh. Tunnel the robot's bridge over SSH to access it remotely.
+Install [Foxglove Desktop](https://foxglove.dev/download). Foxglove connects to
+the robot's Foxglove WebSocket bridge, not directly to Zenoh.
 
-#### Tunnel the robot's Foxglove bridge
-
-OutdoorNav starts its Foxglove bridge on port `8780` in `docker/launch/onav_ui.launch.py`. Confirm it is running and reachable from the SSH host:
+OutdoorNav starts its Foxglove bridge on port `8780` in
+`docker/launch/onav_ui.launch.py`. Confirm it is running and reachable from the
+SSH host:
 
 ```bash
 ssh -p 1122 robot@cpr-rooftop "ss -ltn | grep ':8780'"
 ```
 
-On the remote PC, open the tunnel and leave this terminal running:
+For a direct connection, choose **Open connection** -> **Foxglove WebSocket** and
+connect to `ws://<robot-ip>:8780`.
+
+#### Tunnel the robot's Foxglove bridge
+
+If the PC cannot reach the robot's bridge directly, open an SSH tunnel on the
+remote PC and keep the terminal running:
 
 ```bash
 ssh -p 1122 -N -o ExitOnForwardFailure=yes \
