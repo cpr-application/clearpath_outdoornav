@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CycloneDDS xmlns="https://cdds.io/config">
+  <Domain Id="any">
+    <General>
+      <Interfaces>
+        <NetworkInterface address="${ROBOT_LOCAL_IP}" />
+      </Interfaces>
+      <AllowMulticast>false</AllowMulticast>
+      <!-- Keep datagrams under the VPN MTU; IP fragments are dropped over the tunnel. -->
+      <MaxMessageSize>1400B</MaxMessageSize>
+      <MaxRexmitMessageSize>1400B</MaxRexmitMessageSize>
+    </General>
+    <Discovery>
+      <!-- Must cover the robot's participant count; peers are probed on each index's port. -->
+      <MaxAutoParticipantIndex>120</MaxAutoParticipantIndex>
+      <Peers>
+        <Peer Address="${ROBOT_IP}" />
+      </Peers>
+    </Discovery>
+  </Domain>
+</CycloneDDS>

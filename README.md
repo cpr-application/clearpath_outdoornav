@@ -5,6 +5,8 @@ Welcome to the Clearpth Robotics OutdoorNav GitHub repository! This repository w
 Here you can:
 
 * Refer to our [OutdoorNav User Manual](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/).
+* Connect to a robot using the [Middleware](#middleware) guide.
+* Visualize robot data with [Foxglove](middleware/README.md#foxglove) or [RViz2](middleware/README.md#rviz2).
 * Explore our API endpoints:
   * [Python](python/endpoints/)
   * [C++](cpp/endpoints/)
@@ -15,6 +17,10 @@ Here you can:
 * Participate in [Discussions](https://github.com/clearpathrobotics/CPR-OutdoorNav/discussions):
     * Provide [product feedback](https://github.com/clearpathrobotics/CPR-OutdoorNav/discussions/categories/product-feedback).
     * Check for [Announcements](https://github.com/clearpathrobotics/CPR-OutdoorNav/discussions/categories/announcements) from CPR, such as new releases.
+
+## Middleware
+
+Connect a remote PC to an OutdoorNav robot using Zenoh or Cyclone DDS to access ROS 2 topics and visualize data in RViz. SSH tunneling is supported for Zenoh connections and for accessing the robot's Foxglove bridge. See the [middleware connection guide](middleware/README.md) for robot and PC setup, connection commands, and troubleshooting.
 
 ## API Endpoints
 
