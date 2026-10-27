@@ -73,7 +73,7 @@ class CaptureDiagnosticsActionClient(Node):
         feedback = feedback_msg.feedback
         self.get_logger().info(
             f'[{LOGGING_NAME}] {PHASE_NAMES.get(feedback.phase, feedback.phase)} '
-            f'({feedback.progress * 100:.0f}% of window, {feedback.time_elapsed:.0f}s): {feedback.message}',
+            f'({feedback.progress * 100:.0f}%, {feedback.time_elapsed:.0f}s): {feedback.message}',
             throttle_duration_sec=5)
 
     def capture_get_result_cb(self, future):

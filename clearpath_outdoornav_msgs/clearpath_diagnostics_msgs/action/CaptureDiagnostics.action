@@ -29,7 +29,9 @@ uint8 PHASE_FINALIZING=3
 
 uint8 phase
 string message
-# Fraction of the monitoring window completed, from 0 to 1
+# Overall progress of the capture from 0 to 1. The monitoring window fills the first 75%,
+# then each collection step that finishes adds an equal share of the rest. It reaches 1 once
+# the archive is written.
 float64 progress
 # Seconds since the capture started
 float64 time_elapsed

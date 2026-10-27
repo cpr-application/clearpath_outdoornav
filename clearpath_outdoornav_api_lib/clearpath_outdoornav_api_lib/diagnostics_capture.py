@@ -97,7 +97,7 @@ class DiagnosticsCapture:
         self._capture_feedback = feedback
         self.node.get_logger().info(
             f'[{LOGGING_NAME}] {PHASE_NAMES.get(feedback.phase, feedback.phase)} '
-            f'({feedback.progress * 100:.0f}% of window, {feedback.time_elapsed:.0f}s): '
+            f'({feedback.progress * 100:.0f}%, {feedback.time_elapsed:.0f}s): '
             f'{feedback.message}', throttle_duration_sec=10)
 
     def capture_cancel_response_cb(self, future):

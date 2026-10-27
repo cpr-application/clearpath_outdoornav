@@ -76,7 +76,7 @@ public:
       const std::shared_ptr<const CaptureDiagnostics::Feedback> feedback)
       {
         RCLCPP_INFO_THROTTLE(
-          get_logger(), *get_clock(), 5000, "%s (%.0f%% of window, %.0fs): %s",
+          get_logger(), *get_clock(), 5000, "%s (%.0f%%, %.0fs): %s",
           phase_name(feedback->phase), feedback->progress * 100.0, feedback->time_elapsed,
           feedback->message.c_str());
       };

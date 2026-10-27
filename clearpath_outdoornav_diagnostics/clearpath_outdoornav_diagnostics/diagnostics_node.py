@@ -48,17 +48,27 @@ SERVICE_TIMEOUT_S = 5.0
 
 Feedback = CaptureDiagnostics.Feedback
 
+# Steps the capture script runs after the monitoring window, in order, by the line each
+# one starts with. The last one writes the summary and archive.
+COLLECTION_STEPS = (
+    'Querying lifecycle states',
+    'Dumping node parameters',
+    'Collecting robot software',
+    'Dumping clearpath-platform-extras',
+    'Downloading all Docker container logs',
+    '# OutdoorNav diagnostics capture',
+)
+# Share of the overall progress filled by the monitoring window. Each collection step that
+# finishes adds an equal share of the rest.
+MONITORING_PROGRESS = 0.75
+
 # Progress lines printed by the capture script, and the phase each one starts
 PHASE_MARKERS = (
     ('Waiting for ROS graph', Feedback.PHASE_DISCOVERING),
     ('Monitoring ', Feedback.PHASE_MONITORING),
     ('Capture interrupted', Feedback.PHASE_COLLECTING),
-    ('Querying lifecycle states', Feedback.PHASE_COLLECTING),
-    ('Dumping node parameters', Feedback.PHASE_COLLECTING),
-    ('Collecting robot software', Feedback.PHASE_COLLECTING),
-    ('Dumping clearpath-platform-extras', Feedback.PHASE_COLLECTING),
-    ('Downloading all Docker container logs', Feedback.PHASE_COLLECTING),
-    ('# OutdoorNav diagnostics capture', Feedback.PHASE_FINALIZING),
+    *((step, Feedback.PHASE_COLLECTING) for step in COLLECTION_STEPS[:-1]),
+    (COLLECTION_STEPS[-1], Feedback.PHASE_FINALIZING),
 )
 INTERRUPTIBLE_PHASES = (Feedback.PHASE_DISCOVERING, Feedback.PHASE_MONITORING)
 
@@ -114,6 +124,7 @@ class CaptureProgress:
         self.phase = Feedback.PHASE_DISCOVERING
         self.message = 'Starting diagnostics capture'
         self.monitoring_started = None
+        self.steps_started = 0
         self.archive = None
         self.directory = None
         self.errors = deque(maxlen=5)
@@ -138,6 +149,9 @@ class CaptureProgress:
                 if line.startswith(marker) and phase >= self.phase:
                     if phase == Feedback.PHASE_MONITORING and self.monitoring_started is None:
                         self.monitoring_started = time.monotonic() if now is None else now
+                    if marker in COLLECTION_STEPS:
+                        self.steps_started = max(self.steps_started,
+                                                 COLLECTION_STEPS.index(marker) + 1)
                     self.phase = phase
                     if phase != Feedback.PHASE_FINALIZING:
                         self.message = line.strip()
@@ -147,7 +161,27 @@ class CaptureProgress:
 
     def snapshot(self):
         with self._lock:
-            return self.phase, self.message, self.monitoring_started
+            return self.phase, self.message
+
+    def overall_progress(self, duration, now=None):
+        """
+        Return the fraction of the whole capture that is done, from 0 to 1.
+
+        The monitoring window fills the first MONITORING_PROGRESS. After it, each collection
+        step that finishes adds an equal share of the rest, and writing the archive ends at 1.
+        """
+        with self._lock:
+            if self.archive:
+                return 1.0
+            if self.phase >= Feedback.PHASE_COLLECTING:
+                steps_done = max(0, self.steps_started - 1)
+                return MONITORING_PROGRESS + (
+                    (1.0 - MONITORING_PROGRESS) * steps_done / len(COLLECTION_STEPS))
+            if self.phase == Feedback.PHASE_MONITORING and self.monitoring_started is not None:
+                now = time.monotonic() if now is None else now
+                window = min(1.0, max(0.0, now - self.monitoring_started) / max(duration, 1e-3))
+                return MONITORING_PROGRESS * window
+            return 0.0
 
     def failure_reason(self):
         with self._lock:
@@ -367,7 +401,7 @@ class DiagnosticsServer(Node):
                 capture.stop()
                 result.message = 'Diagnostics server shut down during the capture'
                 return result
-            phase, message, monitoring_started = capture.progress.snapshot()
+            phase, message = capture.progress.snapshot()
             if goal_handle.is_cancel_requested and not cancelled:
                 cancelled = True
                 cancelled_phase = phase
@@ -376,10 +410,7 @@ class DiagnosticsServer(Node):
             feedback.phase = phase
             feedback.message = message
             feedback.time_elapsed = time.monotonic() - started
-            if phase == Feedback.PHASE_MONITORING and monitoring_started is not None:
-                feedback.progress = min(1.0, (time.monotonic() - monitoring_started) / duration)
-            else:
-                feedback.progress = 0.0 if phase < Feedback.PHASE_MONITORING else 1.0
+            feedback.progress = capture.progress.overall_progress(duration)
             goal_handle.publish_feedback(feedback)
             time.sleep(FEEDBACK_PERIOD_S)
         returncode = capture.wait()
