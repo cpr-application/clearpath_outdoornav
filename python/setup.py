@@ -39,6 +39,7 @@ setup(
             'local_dock = endpoints.docking.local_dock:main',
             'map_dock = endpoints.docking.map_dock:main',
             'survey_dock = endpoints.docking.survey_dock:main',
+            'capture_diagnostics = endpoints.diagnostics.capture_diagnostics:main',
             'monitor_localization = endpoints.localization.monitor_localization:main',
             'set_datum = endpoints.localization.set_datum:main',
             'delete_log = endpoints.logger.delete_log:main',

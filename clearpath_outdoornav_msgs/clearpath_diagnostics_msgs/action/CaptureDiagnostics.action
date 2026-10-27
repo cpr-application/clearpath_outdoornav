@@ -1,0 +1,37 @@
+# Capture a diagnostics snapshot of OutdoorNav into an archive on the robot.
+
+# Name of the <name>.tar.gz archive created in the server's output directory. Letters,
+# digits, '.', '_' and '-' only. Empty uses nav_diag_<namespace>_<timestamp>.
+string name
+# Length of the monitoring window in seconds. 0 uses the server's default (60 s).
+float64 duration
+# Also monitor high-bandwidth topics such as images and point clouds
+bool include_heavy_topics
+# Record a rosbag of the monitored topics during the monitoring window
+bool record_bag
+# Skip downloading Docker container logs, which can take several minutes
+bool skip_docker_logs
+---
+# True if the capture completed and its archive was written. A capture whose monitoring
+# window was ended early by cancelling still succeeds.
+bool success
+string message
+# Paths on the computer running the diagnostics server. Only the archive is kept after a
+# successful capture, so capture_directory is empty unless files were left behind
+# (for example, when a capture is cancelled during collection).
+string capture_directory
+string archive_path
+# True if the capture summary reports ERROR-level findings about the robot
+bool has_error_findings
+---
+uint8 PHASE_DISCOVERING=0
+uint8 PHASE_MONITORING=1
+uint8 PHASE_COLLECTING=2
+uint8 PHASE_FINALIZING=3
+
+uint8 phase
+string message
+# Fraction of the monitoring window completed, from 0 to 1
+float64 progress
+# Seconds since the capture started
+float64 time_elapsed

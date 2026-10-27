@@ -9,6 +9,7 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(clearpath_control_selection_msgs REQUIRED)
+find_package(clearpath_diagnostics_msgs REQUIRED)
 find_package(clearpath_dock_msgs REQUIRED)
 find_package(clearpath_localization_msgs REQUIRED)
 find_package(clearpath_logger_msgs REQUIRED)
@@ -27,6 +28,7 @@ find_package(yaml-cpp REQUIRED)
 
 set(dependencies
   clearpath_control_selection_msgs
+  clearpath_diagnostics_msgs
   clearpath_dock_msgs
   clearpath_localization_msgs
   clearpath_logger_msgs
@@ -240,6 +242,16 @@ target_link_libraries(stop_recording
   yaml-cpp::yaml-cpp
 )
 
+# Capture Diagnostics
+add_executable(capture_diagnostics
+  endpoints/diagnostics/capture_diagnostics.cpp
+)
+target_include_directories(capture_diagnostics PUBLIC include)
+ament_target_dependencies(capture_diagnostics ${dependencies})
+target_link_libraries(capture_diagnostics
+  yaml-cpp::yaml-cpp
+)
+
 # install(
 #   DIRECTORY include/
 #   DESTINATION include/${PROJECT_NAME}
@@ -265,6 +277,7 @@ install(TARGETS
   delete_log
   start_recording
   stop_recording
+  capture_diagnostics
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 

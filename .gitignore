@@ -1,0 +1,19 @@
+# Don't track content of these folders
+.catkin_tools
+.vscode
+workspace.code-workspace
+# ignore generated pyc files
+*.pyc
+*~
+*.bak
+*.swp
+*.swo
+bin/
+build/
+cmake_install.cmake
+CMakeLists.txt.user
+.cproject
+.project
+.pyc
+.pydevproject
+.pyo
