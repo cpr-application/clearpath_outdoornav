@@ -85,8 +85,6 @@ def capture_command(namespace, duration, output, goal):
         command.append('--include-heavy')
     if goal.record_bag:
         command.append('--bag')
-    if goal.skip_docker_logs:
-        command.append('--skip-docker-logs')
     return command
 
 

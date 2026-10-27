@@ -16,7 +16,6 @@ const std::string CAPTURE_NAME = "";
 const double DURATION = 0.0;
 const bool INCLUDE_HEAVY_TOPICS = false;
 const bool RECORD_BAG = false;
-const bool SKIP_DOCKER_LOGS = false;
 
 namespace
 {
@@ -55,7 +54,6 @@ public:
     goal_msg.duration = DURATION;
     goal_msg.include_heavy_topics = INCLUDE_HEAVY_TOPICS;
     goal_msg.record_bag = RECORD_BAG;
-    goal_msg.skip_docker_logs = SKIP_DOCKER_LOGS;
 
     auto send_goal_options = rclcpp_action::Client<CaptureDiagnostics>::SendGoalOptions();
 

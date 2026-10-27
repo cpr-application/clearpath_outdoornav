@@ -30,8 +30,7 @@ class DiagnosticsCapture:
         self._capture_status = None
 
     def start_capture(self, name: str = '', duration: float = 0.0,
-                      include_heavy_topics: bool = False, record_bag: bool = False,
-                      skip_docker_logs: bool = False) -> bool:
+                      include_heavy_topics: bool = False, record_bag: bool = False) -> bool:
         """
         Request a capture. Returns False if the action server is unavailable.
 
@@ -43,7 +42,6 @@ class DiagnosticsCapture:
         goal_msg.duration = float(duration)
         goal_msg.include_heavy_topics = include_heavy_topics
         goal_msg.record_bag = record_bag
-        goal_msg.skip_docker_logs = skip_docker_logs
 
         if not self._capture_ac.wait_for_server(timeout_sec=5.0):
             self.node.get_logger().error(

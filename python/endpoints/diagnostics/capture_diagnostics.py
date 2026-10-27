@@ -16,7 +16,6 @@ CAPTURE_NAME: str = ''
 DURATION: float = 0.0
 INCLUDE_HEAVY_TOPICS: bool = False
 RECORD_BAG: bool = False
-SKIP_DOCKER_LOGS: bool = False
 
 PHASE_NAMES = {
     CaptureDiagnostics.Feedback.PHASE_DISCOVERING: 'Discovering',
@@ -42,7 +41,6 @@ class CaptureDiagnosticsActionClient(Node):
         goal_msg.duration = DURATION
         goal_msg.include_heavy_topics = INCLUDE_HEAVY_TOPICS
         goal_msg.record_bag = RECORD_BAG
-        goal_msg.skip_docker_logs = SKIP_DOCKER_LOGS
 
         if not self._action_client.wait_for_server(timeout_sec=5.0):
             self.get_logger().error(f'[{LOGGING_NAME}] /{self._namespace}/outdoornav/diagnostics/capture action server not available!')

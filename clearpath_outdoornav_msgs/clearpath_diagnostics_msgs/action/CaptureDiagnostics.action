@@ -9,8 +9,6 @@ float64 duration
 bool include_heavy_topics
 # Record a rosbag of the monitored topics during the monitoring window
 bool record_bag
-# Skip downloading Docker container logs, which can take several minutes
-bool skip_docker_logs
 ---
 # True if the capture completed and its archive was written. A capture whose monitoring
 # window was ended early by cancelling still succeeds.
