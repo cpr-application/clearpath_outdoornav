@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>clearpath_outdoornav_diagnostics</name>
+  <version>2.3.0</version>
+  <description>Captures a diagnostics snapshot of Clearpath OutdoorNav running on a robot</description>
+
+  <author email="jmastrangelo@clearpathrobotics.com">José Mastrangelo</author>
+  <maintainer email="jmastrangelo@clearpathrobotics.com">José Mastrangelo</maintainer>
+
+  <license>Clearpath Proprietary</license>
+
+  <exec_depend>action_msgs</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>clearpath_diagnostics_msgs</exec_depend>
+  <exec_depend>diagnostic_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>lifecycle_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>python3-matplotlib</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <exec_depend>rcl_interfaces</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>rosidl_runtime_py</exec_depend>
+  <exec_depend>tf2_msgs</exec_depend>
+  <exec_depend>tf2_ros_py</exec_depend>
+
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

@@ -1,0 +1,150 @@
+# OutdoorNav navigation and diagnostics conventions used by nav_diagnostics_capture.py.
+heavy_types:
+  - sensor_msgs/msg/PointCloud2
+  - sensor_msgs/msg/PointCloud
+  - sensor_msgs/msg/Image
+  - sensor_msgs/msg/CompressedImage
+
+nav_nodes:
+  - controller_server
+  - planner_server
+  - smoother_server
+  - behavior_server
+  - onav_navigator
+  - velocity_smoother
+  - collision_monitor
+  - local_costmap/local_costmap
+  - global_costmap/global_costmap
+  - lifecycle_manager_navigation
+localization_nodes:
+  - localization_node
+  - map_odom_publisher
+scan_candidates:
+  - sensors/lidar2d_0/scan_filtered
+  - sensors/lidar3d_0/nonground_filtered
+
+# Relative topic -> whether an idle topic is expected to be quiet.
+key_topics:
+  platform/odom: false
+  localization/odom: false
+  tf: false
+  tf_static: true
+  local_costmap/costmap_raw: false
+  global_costmap/costmap_raw: false
+  plan: true
+  cmd_vel: true
+  diagnostics: false
+localization_topics:
+  localization/odom: false
+tf_lookups:
+  - [map, odom]
+  - [odom, base_link]
+  - [map, base_link]
+
+log_levels:
+  10: DEBUG
+  20: INFO
+  30: WARN
+  40: ERROR
+  50: FATAL
+diagnostic_levels:
+  0: OK
+  1: WARN
+  2: ERROR
+  3: STALE
+diagnostic_severity:
+  0: 0
+  1: 1
+  3: 2
+  2: 3
+environment_variables:
+  - ROS_DISTRO
+  - RMW_IMPLEMENTATION
+  - ROS_DOMAIN_ID
+  - ROBOT_MIDDLEWARE
+  - ROBOT_IP
+  - ROBOT_HOST
+  - ROBOT_NAMESPACE
+  - ROBOT_LOCAL_IP
+  - ZENOH_SESSION_CONFIG_URI
+  - CYCLONEDDS_URI
+namespace_exclude:
+  - parameter_events
+  - rosout
+  - diagnostics
+  - foxglove_bridge
+  - tf
+  - tf_static
+  - clicked_point
+
+# Diagnostic thresholds.
+clock_skew_limit_s: 0.5
+localization_std_xy_limit_m: 0.25
+localization_std_yaw_limit_deg: 10.0
+map_odom_jump_limit_m: 0.25
+map_odom_jump_limit_deg: 10.0
+
+goal_status:
+  0: UNKNOWN
+  1: ACCEPTED
+  2: EXECUTING
+  3: CANCELING
+  4: SUCCEEDED
+  5: CANCELED
+  6: ABORTED
+terminal_goal_status:
+  - SUCCEEDED
+  - CANCELED
+  - ABORTED
+navigation_actions:
+  - navigate_to_pose
+  - navigate_through_poses
+feedback_actions:
+  - navigate_to_pose
+  - navigate_through_poses
+  - follow_path
+result_request_timeout_s: 5.0
+goal_pose_match_before_s: 2.0
+goal_pose_match_after_s: 0.5
+capture_startup_status_window_s: 2.0
+
+# Command path: Nav2 -> smoother -> collision monitor -> twist_mux.
+velocity_chain:
+  - [cmd_vel_nav, Nav2 controller/behavior output]
+  - [cmd_vel_smoothed, velocity_smoother output]
+  - [cmd_vel, collision_monitor output]
+  - [platform/cmd_vel, twist_mux output]
+velocity_stage_checks:
+  cmd_vel_smoothed: velocity_smoother (lifecycle state, deadband and limits)
+  cmd_vel: collision_monitor (see collision monitor events)
+  platform/cmd_vel: twist_mux (stop locks or higher-priority teleop input)
+teleop_inputs:
+  joy_teleop/cmd_vel: Joystick teleop
+  twist_marker_server/cmd_vel: Interactive marker teleop
+  rc_teleop/cmd_vel: RC teleop
+stop_locks:
+  platform/emergency_stop: Emergency stop
+  platform/safety_stop: Safety stop
+  joy_teleop/bt_quality_stop: Bluetooth quality stop
+measured_velocity_topic: platform/odom
+collision_state_topic: navigation/collision_monitor/state
+velocity_extractors:
+  geometry_msgs/msg/TwistStamped: twist
+  geometry_msgs/msg/Twist: self
+  nav_msgs/msg/Odometry: twist.twist
+collision_actions:
+  0: DO_NOTHING
+  1: STOP
+  2: SLOWDOWN
+  3: APPROACH
+  4: LIMIT
+
+# Velocity comparison and data-quality thresholds.
+twist_mux_timeout_s: 0.5
+zero_velocity: 0.001
+moving_velocity: 0.05
+stalled_velocity: 0.01
+min_command_samples: 5
+pass_through_limit_percent: 50.0
+velocity_match_tolerance_s: 0.05
+stalled_command_percent: 50.0
