@@ -10,7 +10,7 @@
 #include "rclcpp_action/rclcpp_action.hpp"
 
 // TODO: Optionally name the capture (letters, digits, '.', '_' and '-').
-// Empty uses nav_diag_<namespace>_<timestamp>.
+// Empty uses onav_diagnostics_<timestamp>.
 const std::string CAPTURE_NAME = "";
 // Monitoring window in seconds; 0 uses the server's default (60 s)
 const double DURATION = 0.0;

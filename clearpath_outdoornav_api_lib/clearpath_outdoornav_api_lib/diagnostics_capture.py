@@ -34,7 +34,7 @@ class DiagnosticsCapture:
         """
         Request a capture. Returns False if the action server is unavailable.
 
-        An empty name uses nav_diag_<namespace>_<timestamp>, and a duration of 0 uses the
+        An empty name uses onav_diagnostics_<timestamp>, and a duration of 0 uses the
         server's default monitoring window.
         """
         goal_msg = CaptureDiagnostics.Goal()

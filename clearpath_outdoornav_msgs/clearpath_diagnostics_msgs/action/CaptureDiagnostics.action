@@ -1,7 +1,7 @@
 # Capture a diagnostics snapshot of OutdoorNav into an archive on the robot.
 
 # Name of the <name>.tar.gz archive created in the server's output directory. Letters,
-# digits, '.', '_' and '-' only. Empty uses nav_diag_<namespace>_<timestamp>.
+# digits, '.', '_' and '-' only. Empty uses onav_diagnostics_<timestamp>.
 string name
 # Length of the monitoring window in seconds. 0 uses the server's default (60 s).
 float64 duration

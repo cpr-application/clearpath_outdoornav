@@ -13,7 +13,7 @@ directory) and request remote service logs:
     ros2 run clearpath_outdoornav_diagnostics nav_diagnostics_capture \
         --remote-service-logs --remote-docker-logs
 
-Results are written to nav_diag_<namespace>_<timestamp>.tar.gz; the capture directory is
+Results are written to onav_diagnostics_<timestamp>.tar.gz; the capture directory is
 removed once archived (keep it with --keep-directory, or skip the archive with --no-archive).
 Extract the archive and open summary.md at the capture root; supporting files are grouped
 in navigation/, ros/, tf/, logs/, timeline/, environment/, parameters/ and, when
@@ -2680,7 +2680,7 @@ def main():
         print(f'Found {count} topics under /{ns}/.')
 
         stamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        out_dir = args.output or Path.cwd() / f'nav_diag_{ns}_{stamp}'
+        out_dir = args.output or Path.cwd() / f'onav_diagnostics_{stamp}'
         # Only a directory created by this capture is removed after archiving
         created_out_dir = not out_dir.exists()
         out_dir.mkdir(parents=True, exist_ok=True)

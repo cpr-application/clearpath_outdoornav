@@ -83,11 +83,11 @@ def read_robot_namespace(path=ROBOT_CONFIG_PATH):
     return str(namespace).strip('/')
 
 
-def capture_name(name, namespace, now=None):
+def capture_name(name, now=None):
     """Return the capture name to use, or raise ValueError if it isn't a safe file name."""
     name = name.strip()
     if not name:
-        return f'nav_diag_{namespace}_{(now or datetime.now()):%Y%m%d_%H%M%S}'
+        return f'onav_diagnostics_{(now or datetime.now()):%Y%m%d_%H%M%S}'
     if not NAME_PATTERN.fullmatch(name):
         raise ValueError(
             f"Invalid capture name '{name}': use up to 128 letters, digits, '.', '_' or '-', "
@@ -364,7 +364,7 @@ class DiagnosticsServer(Node):
         started = time.monotonic()
 
         try:
-            name = capture_name(goal.name, self.robot_namespace)
+            name = capture_name(goal.name)
             if not math.isfinite(goal.duration) or goal.duration < 0:
                 raise ValueError(f'Invalid duration {goal.duration}: must be 0 or more seconds')
         except ValueError as error:

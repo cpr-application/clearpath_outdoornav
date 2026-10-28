@@ -10,7 +10,7 @@ ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
 LOGGING_NAME = 'CaptureDiagnostics'
 
 # TODO: Optionally name the capture (letters, digits, '.', '_' and '-').
-# Empty uses nav_diag_<namespace>_<timestamp>.
+# Empty uses onav_diagnostics_<timestamp>.
 CAPTURE_NAME: str = ''
 # Monitoring window in seconds; 0 uses the server's default (60 s)
 DURATION: float = 0.0
