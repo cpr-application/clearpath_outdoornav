@@ -148,25 +148,25 @@ Visualization Manager:
           Value: false
         map:
           Value: false
-        oak_d_pro_w_front_imu:
+        camera_0_imu:
           Value: false
-        oak_d_pro_w_front_left_optical:
+        camera_0_left_optical:
           Value: false
-        oak_d_pro_w_front_link:
+        camera_0_link:
           Value: false
-        oak_d_pro_w_front_rgb_optical:
+        camera_0_rgb_optical:
           Value: false
-        oak_d_pro_w_front_right_optical:
+        camera_0_right_optical:
           Value: false
-        oak_d_pro_w_rear_imu:
+        camera_1_imu:
           Value: false
-        oak_d_pro_w_rear_left_optical:
+        camera_1_left_optical:
           Value: false
-        oak_d_pro_w_rear_link:
+        camera_1_link:
           Value: false
-        oak_d_pro_w_rear_rgb_optical:
+        camera_1_rgb_optical:
           Value: false
-        oak_d_pro_w_rear_right_optical:
+        camera_1_right_optical:
           Value: false
         odom:
           Value: false
@@ -291,12 +291,12 @@ Visualization Manager:
                     sensor_arch_antennas:
                       {}
                     sensor_arch_front_camera_mount:
-                      oak_d_pro_w_front_link:
-                        oak_d_pro_w_front_rgb_optical:
-                          oak_d_pro_w_front_left_optical:
-                            oak_d_pro_w_front_imu:
+                      camera_0_link:
+                        camera_0_rgb_optical:
+                          camera_0_left_optical:
+                            camera_0_imu:
                               {}
-                          oak_d_pro_w_front_right_optical:
+                          camera_0_right_optical:
                             {}
                     sensor_arch_front_left_corner_mount:
                       driving_light_1_link:
@@ -311,12 +311,12 @@ Visualization Manager:
                     sensor_arch_lidar_mount:
                       {}
                     sensor_arch_rear_camera_mount:
-                      oak_d_pro_w_rear_link:
-                        oak_d_pro_w_rear_rgb_optical:
-                          oak_d_pro_w_rear_left_optical:
-                            oak_d_pro_w_rear_imu:
+                      camera_1_link:
+                        camera_1_rgb_optical:
+                          camera_1_left_optical:
+                            camera_1_imu:
                               {}
-                          oak_d_pro_w_rear_right_optical:
+                          camera_1_right_optical:
                             {}
                     sensor_arch_rear_left_corner_mount:
                       driving_light_3_link:
@@ -951,7 +951,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: oak_d_pro_w_front/image_color/compressed
+        Value: sensors/camera_0/color/compressed
       Value: true
     - Class: rviz_default_plugins/Image
       Enabled: true
@@ -965,7 +965,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: oak_d_pro_w_rear/image_color/compressed
+        Value: sensors/camera_1/color/compressed
       Value: true
     - Class: rviz_default_plugins/Image
       Enabled: true
