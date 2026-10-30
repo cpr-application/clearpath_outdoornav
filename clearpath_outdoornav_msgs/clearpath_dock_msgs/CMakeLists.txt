@@ -14,10 +14,10 @@ rosidl_generate_interfaces(
         action/MapDock.action
         action/Dock.action
         action/Undock.action
+        action/SurveyDock.action
         msg/DockInfoArray.msg
         msg/DockInfo.msg
         msg/DockTemplate.msg
-#        msg/DockProperties.msg
         msg/DockState.msg
         msg/TargetTrackerState.msg
         msg/DockDatabase.msg
@@ -32,7 +32,6 @@ rosidl_generate_interfaces(
         srv/RemoveDock.srv
         srv/UpdateDock.srv
         srv/GetDockPoses.srv
-        srv/SurveyDock.srv
     DEPENDENCIES
         geometry_msgs
         clearpath_navigation_msgs

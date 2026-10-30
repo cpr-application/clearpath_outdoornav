@@ -1,0 +1,18 @@
+# Action definition for surveying a dock's location using the robot's target tracker.
+
+# goal
+string dock_name
+# Seconds to wait for the dock target to become visible before aborting (<= 0 uses the server default)
+float32 timeout
+---
+# result
+bool success
+string message
+float32 elapsed_time
+---
+# feedback
+uint32 samples_collected
+uint32 samples_required
+bool dock_visible
+float32 elapsed_time
+string message
