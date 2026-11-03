@@ -15,6 +15,7 @@
   <depend>action_msgs</depend>
   <depend>clearpath_navigation_msgs</depend>
   <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
   <exec_depend>rosidl_default_runtime</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
