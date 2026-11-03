@@ -172,6 +172,16 @@ target_link_libraries(map_dock
   yaml-cpp::yaml-cpp
 )
 
+# Monitor Dock Status
+add_executable(monitor_dock_status
+  endpoints/docking/monitor_dock_status.cpp
+)
+target_include_directories(monitor_dock_status PUBLIC include)
+ament_target_dependencies(monitor_dock_status ${dependencies})
+target_link_libraries(monitor_dock_status
+  yaml-cpp::yaml-cpp
+)
+
 # Survey Dock
 add_executable(survey_dock
   endpoints/docking/survey_dock.cpp
@@ -270,6 +280,7 @@ install(TARGETS
   add_dock
   local_dock
   map_dock
+  monitor_dock_status
   survey_dock
   undock
 #   monitor_location

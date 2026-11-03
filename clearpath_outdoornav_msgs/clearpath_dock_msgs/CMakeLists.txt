@@ -7,6 +7,7 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(clearpath_navigation_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 set(CMAKE_CXX_STANDARD 17)
 
 rosidl_generate_interfaces(
@@ -19,6 +20,7 @@ rosidl_generate_interfaces(
         msg/DockInfo.msg
         msg/DockTemplate.msg
         msg/DockState.msg
+        msg/DockStatus.msg
         msg/TargetTrackerState.msg
         msg/DockDatabase.msg
         srv/RunDocking.srv
@@ -34,6 +36,7 @@ rosidl_generate_interfaces(
         srv/GetDockPoses.srv
     DEPENDENCIES
         geometry_msgs
+        std_msgs
         clearpath_navigation_msgs
 )
 

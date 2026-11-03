@@ -38,6 +38,7 @@ setup(
             'add_dock = endpoints.docking.add_dock:main',
             'local_dock = endpoints.docking.local_dock:main',
             'map_dock = endpoints.docking.map_dock:main',
+            'monitor_dock_status = endpoints.docking.monitor_dock_status:main',
             'survey_dock = endpoints.docking.survey_dock:main',
             'capture_diagnostics = endpoints.diagnostics.capture_diagnostics:main',
             'monitor_localization = endpoints.localization.monitor_localization:main',
