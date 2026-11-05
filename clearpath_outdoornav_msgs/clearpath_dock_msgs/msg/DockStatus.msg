@@ -20,11 +20,13 @@ uint8 evidence
 
 # Template being observed, not the identity of a surveyed dock.
 string dock_template
-bool geometry_fresh
-bool hardware_fresh
+# The lidar tracker is tracking the dock target with a current (under evidence_timeout), valid lock.
+bool dock_target_tracked
+# Current, error-free status is being received from the Wiferion charger.
+bool charger_reporting
 bool conflict
 bool charger_fault
 
-# Valid only when geometry_fresh is true; expressed in the desired dock frame.
+# Valid only when dock_target_tracked is true; expressed in the desired dock frame.
 geometry_msgs/Pose2D pose_error
 string reason

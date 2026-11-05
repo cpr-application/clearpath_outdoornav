@@ -133,7 +133,7 @@ private:
     {
       RCLCPP_INFO(get_logger(), "%s", text.c_str());
     }
-    if (msg.geometry_fresh)
+    if (msg.dock_target_tracked)
     {
       RCLCPP_INFO(get_logger(), "Pose error from docked pose: x = %.3f m, y = %.3f m, yaw = %.3f rad",
                   msg.pose_error.x, msg.pose_error.y, msg.pose_error.theta);

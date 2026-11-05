@@ -88,7 +88,7 @@ class DockStatusMonitor(Node):
             self.get_logger().warn(text)
         else:
             self.get_logger().info(text)
-        if msg.geometry_fresh:
+        if msg.dock_target_tracked:
             self.get_logger().info(
                 f'[{LOGGING_NAME}] Pose error from docked pose: x = {msg.pose_error.x:.3f} m, '
                 f'y = {msg.pose_error.y:.3f} m, yaw = {msg.pose_error.theta:.3f} rad')
