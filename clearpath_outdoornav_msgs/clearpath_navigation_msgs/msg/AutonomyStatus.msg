@@ -13,5 +13,6 @@ uint8 GOTO_POI = 4
 uint8 DOCKING_LOCAL = 5
 uint8 UNDOCKING_LOCAL = 6
 uint8 DOCKING_MAP = 7
+uint8 GO_HOME = 8
 
 uint8 state
