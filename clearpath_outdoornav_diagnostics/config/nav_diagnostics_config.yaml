@@ -17,7 +17,7 @@ nav_nodes:
   - global_costmap/global_costmap
   - lifecycle_manager_navigation
 localization_nodes:
-  - localization_node
+  - localization
   - map_odom_publisher
 scan_candidates:
   - sensors/lidar2d_0/scan_filtered

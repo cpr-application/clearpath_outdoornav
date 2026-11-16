@@ -20,11 +20,17 @@ in navigation/, ros/, tf/, logs/, timeline/, environment/, parameters/ and, when
 recording, bag/.
 Trajectory, localization and velocity plots are always written; missing data is
 annotated in the plots rather than suppressing their output.
+Robot identity uses environment variables, the SSH target and matching robot.yaml
+host entries; values that cannot be determined are reported as unavailable.
+The localization corrections subplot is shown only when map-to-odom changes are recorded.
+Planned paths from autonomy/initial_path are concatenated in receipt order for the
+trajectory plot and metrics, including straight-line connections between paths.
 timeline/ contains a unified live-capture event stream (JSON/CSV) and plot:
 goal changes/results, localization threshold crossings, stop/collision states,
 diagnostic changes and significant ROS logs. Events use capture-host receipt
 time; publisher timestamps are retained separately. This is not a causal diagnosis
 or a timeline of historical Docker/service logs.
+ROS logs are retained in the timeline JSON/CSV but omitted from the plot.
 environment/fingerprint/ contains robot software/image provenance and sanitized
 configuration snapshots. --remote-fingerprint (also enabled by either remote-log
 option) collects these on the robot over SSH; --ssh-port overrides SSH config.
@@ -33,13 +39,15 @@ Identical sanitized contents are saved once; fingerprint.json lists every source
 Configuration snapshots preserve commands, redacting recognizable credential
 keys, arguments and URLs only. Unlabeled positional credentials and raw logs or
 middleware files may still contain sensitive data. Review before sharing.
-Docker logs for every container are downloaded from Dozzle as a ZIP, covering all
-history still retained by Docker's logging driver. For a remote capture, Dozzle
+Container discovery and ZIP log downloads use Dozzle's HTTP API; the capture does
+not require the Docker CLI or Docker socket access. Logs cover all history still
+retained by Docker's logging driver for containers visible to Dozzle. --dozzle-host
+optionally restricts collection to one Dozzle host ID. For a remote capture, Dozzle
 must be reachable at http://<robot_ip>:5200/_/logs or set --dozzle-url.
 The latest service invocation's clearpath-platform-extras journal is read locally
 by default. Use --remote-service-logs to retrieve it over SSH as robot (override
 with --ssh-user/--ssh-host), or disable with --skip-service-logs.
-Remote retrieval requires trusted SSH host keys, key/agent authentication and
+Remote journal/fingerprint retrieval requires trusted SSH host keys, key/agent authentication and
 passwordless sudo. Local retrieval requires passwordless sudo or cached credentials.
 Press Ctrl-C to end the capture window early; results are still written.
 """
@@ -51,6 +59,7 @@ import csv
 import hashlib
 import importlib.metadata
 import inspect
+import ipaddress
 import json
 import math
 import os
@@ -525,45 +534,55 @@ def save_localization_outputs(out_dir, localization_poses, map_odom, initial_pos
                              round(sample['std_xy_m'], 4), round(sample['std_yaw_deg'], 3)])
 
     plt = pyplot()
-    figure, (uncertainty, corrections) = plt.subplots(2, 1, figsize=(10, 7), sharex=True)
+    history = result['correction_history']
+    figure, axes = plt.subplots(2 if history else 1, 1,
+                               figsize=(10, 7 if history else 4), sharex=True, squeeze=False)
+    uncertainty = axes[0, 0]
     if localization_poses:
         times = [sample['time'] - capture_start for sample in localization_poses]
         uncertainty.step(times, [s['std_xy_m'] for s in localization_poses], where='post',
                          color='#2676b8', label='Position σ (m)')
         uncertainty.axhline(LOCALIZATION_STD_XY_LIMIT_M, color='#2676b8', linestyle=':',
-                            linewidth=1)
+                            linewidth=1,
+                            label=f'Position σ warning threshold ({LOCALIZATION_STD_XY_LIMIT_M} m)')
         yaw_axis = uncertainty.twinx()
         yaw_axis.step(times, [s['std_yaw_deg'] for s in localization_poses], where='post',
                       color='#e66b32', label='Yaw σ (deg)')
         yaw_axis.set_ylabel('Yaw σ [deg]')
-        lines = uncertainty.get_lines()[:1] + yaw_axis.get_lines()
-        uncertainty.legend(lines, [line.get_label() for line in lines], loc='upper left')
     else:
         uncertainty.text(0.5, 0.5, 'No localization poses received',
                          transform=uncertainty.transAxes, ha='center')
     uncertainty.set_ylabel('Position σ [m]')
     uncertainty.set_title('Localization pose uncertainty')
     uncertainty.grid(True, alpha=0.25)
-    history = result['correction_history']
     if history:
+        corrections = axes[1, 0]
         corrections.bar([c['time'] - capture_start for c in history],
                         [c['translation_m'] for c in history], width=0.15,
                         color='#7a5195', label='map→odom translation change')
         corrections.axhline(MAP_ODOM_JUMP_LIMIT_M, color='#b32e37', linestyle=':',
                             linewidth=1, label='Jump threshold')
-        corrections.legend(loc='upper left')
+        corrections.set_title('Localization corrections (green dashes: initial pose set)')
+        corrections.set_ylabel('Change [m]')
+        corrections.grid(True, alpha=0.25)
     else:
-        corrections.text(0.5, 0.5, 'No map-to-odom changes recorded',
-                         transform=corrections.transAxes, ha='center')
-    for event in initial_poses:
-        for axis in (uncertainty, corrections):
+        note = 'Map-to-odom remained unchanged.' if map_odom else \
+            'No map-to-odom samples recorded.'
+        figure.text(0.5, 0.02, note, ha='center', fontsize=9)
+    for index, event in enumerate(initial_poses):
+        for axis in axes.flat:
             axis.axvline(event['time'] - capture_start, color='#27864b', linestyle='--',
-                         linewidth=1)
-    corrections.set_title('Localization corrections (green dashes: initial pose set)')
-    corrections.set_xlabel('Capture time [s]')
-    corrections.set_ylabel('Change [m]')
-    corrections.grid(True, alpha=0.25)
-    figure.tight_layout()
+                         linewidth=1, label='Initial pose set' if index == 0 else None)
+    for axis in axes.flat:
+        handles, labels = axis.get_legend_handles_labels()
+        if axis is uncertainty and localization_poses:
+            yaw_handles, yaw_labels = yaw_axis.get_legend_handles_labels()
+            handles += yaw_handles
+            labels += yaw_labels
+        if handles:
+            axis.legend(handles, labels, loc='upper left')
+    axes[-1, 0].set_xlabel('Capture time [s]')
+    figure.tight_layout(rect=(0, 0 if history else 0.06, 1, 1))
     figure.savefig(out_dir / 'localization_plot.png', dpi=150)
     plt.close(figure)
     result['plot'] = 'localization_plot.png'
@@ -754,8 +773,8 @@ def save_velocity_outputs(out_dir, samples, topics, locks, collision_events,
         if not series:
             continue
         times = [s[0] - capture_start for s in series]
-        style = {'linewidth': 2.2, 'color': 'black'} \
-            if relative == MEASURED_VELOCITY_TOPIC else {'linewidth': 1.3}
+        style = {'linewidth': 0.8, 'color': '#777777', 'alpha': 0.55, 'zorder': 1} \
+            if relative == MEASURED_VELOCITY_TOPIC else {'linewidth': 1.5, 'zorder': 2}
         label = f'{relative} (measured)' if relative == MEASURED_VELOCITY_TOPIC else relative
         linear.step(times, [s[1] for s in series], where='post', label=label, **style)
         angular.step(times, [s[3] for s in series], where='post', label=label, **style)
@@ -777,7 +796,7 @@ def save_velocity_outputs(out_dir, samples, topics, locks, collision_events,
     for axis in (linear, angular):
         axis.grid(True, alpha=0.25)
     if linear.get_legend_handles_labels()[0]:
-        linear.legend(loc='upper left', fontsize=8, ncol=2)
+        linear.legend(loc='lower left', bbox_to_anchor=(0, 1.08), fontsize=8, ncol=3)
     if not any(samples.get(relative) for relative in plotted):
         for axis in (linear, angular):
             axis.text(0.5, 0.5, 'No velocity samples received',
@@ -927,20 +946,20 @@ def save_timeline_outputs(out_dir, capture_start, capture_end, goals, localizati
         writer.writeheader()
         writer.writerows(events)
     plt = pyplot()
-    lanes = ['Navigation', 'Localization', 'Collision monitor', 'Stop locks',
-             'Diagnostics', 'ROS logs']
+    lanes = ['Navigation', 'Localization', 'Collision monitor', 'Stop locks', 'Diagnostics']
+    plotted_events = [event for event in events if event['category'] != 'ROS logs']
     figure, axis = plt.subplots(figsize=(12, 5))
     for severity, color in (('INFO', '#2676b8'), ('WARN', '#f2a541'),
                             ('ERROR', '#b32e37'), ('FATAL', '#7a5195')):
-        selected = [event for event in events if event['severity'] == severity]
+        selected = [event for event in plotted_events if event['severity'] == severity]
         if selected:
             axis.scatter([event['elapsed_s'] for event in selected],
                          [lanes.index(event['category']) for event in selected],
                          label=severity, color=color, s=25, alpha=0.7)
-    if events:
+    if plotted_events:
         axis.legend(loc='upper right')
     else:
-        axis.text(0.5, 0.5, 'No timeline events observed during capture',
+        axis.text(0.5, 0.5, 'No non-log timeline events observed during capture',
                   transform=axis.transAxes, ha='center')
     axis.set_yticks(range(len(lanes)), labels=lanes)
     axis.set_xlim(0, max(capture_end - capture_start, 0.001))
@@ -1096,7 +1115,7 @@ class Capture(Node):
                 TFMessage, topic, lambda m, s=static: self.on_tf(m, s), self.qos_for(topic)[0])
 
     def monitor_trajectory(self, graph, namespace):
-        path_topic = f'/{namespace}/plan'
+        path_topic = f'/{namespace}/autonomy/initial_path'
         odom_topic = f'/{namespace}/localization/odom'
         if path_topic in graph['topics'] and 'nav_msgs/msg/Path' in graph['topics'][path_topic]['types']:
             self.create_subscription(NavPath, path_topic, self.on_global_path,
@@ -1328,9 +1347,23 @@ class Capture(Node):
 
     def on_global_path(self, msg):
         points = [(pose.pose.position.x, pose.pose.position.y) for pose in msg.poses]
-        if len(points) >= 2:
+        if len(points) < 2:
+            return
+        if self.global_path is None:
             self.global_path = points
             self.global_path_frame = msg.header.frame_id
+        else:
+            if msg.header.frame_id != self.global_path_frame:
+                try:
+                    transform = self.tf_buffer.lookup_transform(
+                        self.global_path_frame, msg.header.frame_id,
+                        Time.from_msg(msg.header.stamp), timeout=Duration(seconds=0.05))
+                    points = [transform_xy(x, y, transform.transform) for x, y in points]
+                except Exception as exc:
+                    self.trajectory_errors[type(exc).__name__] += 1
+                    self.get_logger().warning(f'Cannot append planned path: {exc}')
+                    return
+            self.global_path.extend(points)
 
     def on_odometry(self, msg):
         if self.global_path is None:
@@ -1944,6 +1977,61 @@ def copy_middleware_config(out_dir):
             shutil.copy(path, out_dir / Path(path).name)
 
 
+def robot_identity(namespace, env, ssh_host, capture_host):
+    hostname = env.get('ROBOT_HOST')
+    address = env.get('ROBOT_IP')
+    target = ssh_host or ''
+    try:
+        target_ip = str(ipaddress.ip_address(target))
+    except ValueError:
+        target_ip = None
+    if target_ip:
+        address = address or target_ip
+    elif target:
+        hostname = hostname or target
+
+    robot_config = Path('/etc/clearpath/robot.yaml')
+    if robot_config.is_file():
+        try:
+            config = yaml.safe_load(robot_config.read_text())
+            system = config.get('system', {}) if isinstance(config, dict) else {}
+            ros2 = system.get('ros2', {}) if isinstance(system, dict) else {}
+            hosts = system.get('hosts', []) if isinstance(system, dict) else []
+            if isinstance(ros2, dict) and ros2.get('namespace', '').strip('/') == namespace \
+                    and isinstance(hosts, list):
+                hosts = [host for host in hosts if isinstance(host, dict)]
+                matching = [host for host in hosts if
+                            (hostname and host.get('hostname') == hostname) or
+                            (address and host.get('ip') == address)]
+                if not hostname and not address:
+                    matching = [host for host in hosts if host.get('hostname') == capture_host]
+                    if not matching and len(hosts) == 1:
+                        matching = hosts
+                selected = matching[0] if len(matching) == 1 else None
+                if selected:
+                    hostname = hostname or selected.get('hostname')
+                    address = address or selected.get('ip')
+        except (OSError, yaml.YAMLError, AttributeError) as exc:
+            print(f'WARNING: Cannot read robot identity from {robot_config}: {exc}',
+                  file=sys.stderr)
+
+    if hostname and not address:
+        try:
+            address = socket.gethostbyname(hostname)
+            if ipaddress.ip_address(address).is_loopback:
+                address = None
+        except (OSError, ValueError) as exc:
+            print(f'WARNING: Cannot resolve robot hostname {hostname}: {exc}', file=sys.stderr)
+    implementation = env.get('RMW_IMPLEMENTATION')
+    middleware = env.get('ROBOT_MIDDLEWARE') or {
+        'rmw_zenoh_cpp': 'zenoh',
+        'rmw_cyclonedds_cpp': 'cyclone_dds',
+        'rmw_fastrtps_cpp': 'fast_dds',
+        'rmw_fastrtps_dynamic_cpp': 'fast_dds',
+    }.get(implementation)
+    return {'hostname': hostname, 'ip': address, 'middleware': middleware}
+
+
 def run_ping(out_dir):
     ip = os.environ.get('ROBOT_IP')
     if not ip or not shutil.which('ping'):
@@ -2023,113 +2111,126 @@ def collect_platform_extras_logs(out_dir, host, user, local=True, ssh_port=None)
     return result
 
 
-def collect_docker_logs(out_dir, url, dozzle_host, host, user, remote=False, timeout=600,
-                        ssh_port=None):
+def list_dozzle_containers(url, dozzle_host):
+    request = urllib.request.Request(
+        url.rstrip('/') + '/api/events/stream', headers={'Accept': 'text/event-stream'})
+    deadline = time.monotonic() + 60
+    with urllib.request.urlopen(request, timeout=60) as response:
+        if response.headers.get_content_type() != 'text/event-stream':
+            raise ValueError('Dozzle container discovery did not return an event stream.')
+        event, data = '', []
+        size = 0
+        while time.monotonic() < deadline:
+            line = response.readline(16 * 1024 * 1024 + 1)
+            if not line:
+                break
+            size += len(line)
+            if size > 16 * 1024 * 1024:
+                raise ValueError('Dozzle container discovery exceeded 16 MiB.')
+            line = line.decode('utf-8').rstrip('\r\n')
+            if not line:
+                if event == 'containers-changed':
+                    containers = json.loads('\n'.join(data))
+                    if containers is None:
+                        return []
+                    if not isinstance(containers, list):
+                        raise ValueError('Dozzle returned an invalid container list.')
+                    selected = []
+                    for container in containers:
+                        if not isinstance(container, dict) or \
+                                not isinstance(container.get('id'), str) or \
+                                not re.fullmatch(r'[0-9a-fA-F]{12,64}', container['id']) or \
+                                not isinstance(container.get('host'), str) or \
+                                not container['host']:
+                            raise ValueError('Dozzle returned an invalid container entry.')
+                        if dozzle_host is None or container['host'] == dozzle_host:
+                            selected.append(container)
+                    if containers and not selected:
+                        raise ValueError(
+                            f'Dozzle reported no containers for host {dozzle_host!r}; '
+                            'check --dozzle-host.')
+                    return selected
+                event, data = '', []
+            elif line.startswith('event:'):
+                event = line[6:].removeprefix(' ')
+            elif line.startswith('data:'):
+                data.append(line[5:].removeprefix(' '))
+    raise ValueError('Dozzle event stream ended or timed out before the container list.')
+
+
+def collect_docker_logs(out_dir, url, dozzle_host, timeout=600):
     result = {
         'status': 'error',
-        'transport': 'SSH' if remote else 'local',
+        'transport': 'HTTP',
         'dozzle_url': url,
         'dozzle_host': dozzle_host,
-        'scope': 'all containers and all history retained by Docker',
+        'scope': 'containers visible to Dozzle and all history retained by Docker',
         'archive': 'docker_logs.zip',
         'stderr': 'docker_logs.stderr.txt',
         'container_count': 0,
         'log_file_count': 0,
     }
-    containers = []
-    if remote and not host:
-        result['error'] = 'No robot address: set ROBOT_IP/ROBOT_HOST or pass --ssh-host.'
-        (out_dir / result['stderr']).write_text(result['error'] + '\n')
-        print(f'WARNING: {result["error"]}', file=sys.stderr)
-        return result
-
-    docker_command = [
-        'docker', 'ps', '--all', '--no-trunc',
-        '--format', '{{.ID}}|{{.Names}}|{{.Status}}',
-    ]
-    command = docker_command if not remote else [
-        'ssh', '-T', *(['-p', str(ssh_port)] if ssh_port is not None else []),
-        '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=10',
-        '-o', 'StrictHostKeyChecking=yes', '-o', 'ServerAliveInterval=5',
-        '-o', 'ServerAliveCountMax=2', '-l', user, '--', host,
-        "docker ps --all --no-trunc --format '{{.ID}}|{{.Names}}|{{.Status}}'",
-    ]
     try:
-        proc = subprocess.run(command, capture_output=True, text=True,
-                              stdin=subprocess.DEVNULL, timeout=60)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        result['error'] = f'Could not list Docker containers: {exc}'
+        containers = list_dozzle_containers(url, dozzle_host)
+    except urllib.error.HTTPError as exc:
+        detail = exc.read(4096).decode(errors='replace').strip()
+        result['error'] = (
+            f'Dozzle container discovery returned HTTP {exc.code}'
+            f'{": " + detail if detail else ""}.')
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
+        result['error'] = f'Could not list Docker containers through Dozzle: {exc}'
     else:
-        if proc.returncode:
-            result['error'] = (
-                f'Docker container listing exited with code {proc.returncode}: '
-                f'{proc.stderr.strip() or "no error output"}')
+        result['container_count'] = len(containers)
+        if not containers:
+            result['status'] = 'empty'
+            result['error'] = 'Dozzle reported no containers.'
         else:
-            invalid_lines = []
-            for line in proc.stdout.splitlines():
-                fields = line.split('|', 2)
-                if len(fields) != 3 or not re.fullmatch(r'[0-9a-fA-F]{12,64}', fields[0]):
-                    invalid_lines.append(line)
-                    continue
-                container_id, name, status = fields
-                containers.append({
-                    'id': container_id,
-                    'name': name,
-                    'status': status,
-                })
-            result['container_count'] = len(containers)
-            if invalid_lines:
-                result['error'] = 'Docker returned container entries in an unexpected format.'
-            elif not containers:
-                result['status'] = 'empty'
-                result['error'] = 'Docker reported no containers.'
-            else:
-                data = [
-                    ('format', 'zip'),
-                    ('stdout', 'true'),
-                    ('stderr', 'true'),
-                ]
-                data.extend(
-                    ('container', f'{dozzle_host}/{container["id"]}')
-                    for container in containers
+            data = [
+                ('format', 'zip'),
+                ('stdout', 'true'),
+                ('stderr', 'true'),
+            ]
+            data.extend(
+                ('container', f'{container["host"]}/{container["id"]}')
+                for container in containers
+            )
+            temporary_archive = out_dir / (result['archive'] + '.part')
+            archive_path = out_dir / result['archive']
+            try:
+                request = urllib.request.Request(
+                    url.rstrip('/') + '/api/containers/logs',
+                    data=urllib.parse.urlencode(data).encode(),
+                    headers={'Content-Type': 'application/x-www-form-urlencoded'},
+                    method='POST',
                 )
-                temporary_archive = out_dir / (result['archive'] + '.part')
-                archive_path = out_dir / result['archive']
-                try:
-                    request = urllib.request.Request(
-                        url.rstrip('/') + '/api/containers/logs',
-                        data=urllib.parse.urlencode(data).encode(),
-                        headers={'Content-Type': 'application/x-www-form-urlencoded'},
-                        method='POST',
-                    )
-                    with urllib.request.urlopen(request, timeout=timeout) as response, \
-                            temporary_archive.open('wb') as archive:
-                        while chunk := response.read(1024 * 1024):
-                            archive.write(chunk)
-                    with zipfile.ZipFile(temporary_archive) as archive:
-                        log_files = [name for name in archive.namelist()
-                                     if not name.endswith('/')]
-                        if not log_files:
-                            raise RuntimeError('Dozzle returned an empty log archive.')
-                    temporary_archive.replace(archive_path)
-                    result['status'] = (
-                        'ok' if len(log_files) == len(containers) else 'partial')
-                    result['log_file_count'] = len(log_files)
-                    result['log_files'] = log_files
-                    if result['status'] == 'partial':
-                        result['error'] = (
-                            f'Dozzle returned {len(log_files)} log files for '
-                            f'{len(containers)} containers; some container logs may be unavailable.')
-                except urllib.error.HTTPError as exc:
-                    detail = exc.read(4096).decode(errors='replace').strip()
+                with urllib.request.urlopen(request, timeout=timeout) as response, \
+                        temporary_archive.open('wb') as archive:
+                    while chunk := response.read(1024 * 1024):
+                        archive.write(chunk)
+                with zipfile.ZipFile(temporary_archive) as archive:
+                    log_files = [name for name in archive.namelist()
+                                 if not name.endswith('/')]
+                    if not log_files:
+                        raise RuntimeError('Dozzle returned an empty log archive.')
+                temporary_archive.replace(archive_path)
+                result['status'] = (
+                    'ok' if len(log_files) == len(containers) else 'partial')
+                result['log_file_count'] = len(log_files)
+                result['log_files'] = log_files
+                if result['status'] == 'partial':
                     result['error'] = (
-                        f'Dozzle log download returned HTTP {exc.code}'
-                        f'{": " + detail if detail else ""}.')
-                except (urllib.error.URLError, TimeoutError, OSError,
-                        zipfile.BadZipFile, RuntimeError, ValueError) as exc:
-                    result['error'] = f'Could not download valid Docker logs from Dozzle: {exc}'
-                finally:
-                    temporary_archive.unlink(missing_ok=True)
+                        f'Dozzle returned {len(log_files)} log files for '
+                        f'{len(containers)} containers; some container logs may be unavailable.')
+            except urllib.error.HTTPError as exc:
+                detail = exc.read(4096).decode(errors='replace').strip()
+                result['error'] = (
+                    f'Dozzle log download returned HTTP {exc.code}'
+                    f'{": " + detail if detail else ""}.')
+            except (urllib.error.URLError, TimeoutError, OSError,
+                    zipfile.BadZipFile, RuntimeError, ValueError) as exc:
+                result['error'] = f'Could not download valid Docker logs from Dozzle: {exc}'
+            finally:
+                temporary_archive.unlink(missing_ok=True)
 
     if result['status'] == 'error':
         (out_dir / result['stderr']).write_text(result['error'] + '\n')
@@ -2464,13 +2565,16 @@ def build_summary(ctx):
     velocity_lines = summarize_velocity(ctx.get('velocity'), add)
 
     env_info = ctx['environment']
+    identity = env_info['robot']
     lines = [
         '# OutdoorNav diagnostics capture',
         '',
         f'- Captured: {env_info["captured_at"]} from `{env_info["host"]}`',
-        f'- Robot: `{ns}` @ {env.get("ROBOT_HOST") or "?"} ({env.get("ROBOT_IP") or "?"}), '
+        f'- Robot: `{ns}` @ {identity["hostname"] or "unavailable"} '
+        f'({identity["ip"] or "unavailable"}), '
         f'domain {env.get("ROS_DOMAIN_ID") or 0}',
-        f'- Middleware: {env.get("ROBOT_MIDDLEWARE") or "?"} ({env.get("RMW_IMPLEMENTATION") or "default"})',
+        f'- Middleware: {identity["middleware"] or "unavailable"} '
+        f'({env.get("RMW_IMPLEMENTATION") or "default"})',
         f'- Capture window: {ctx["window"]:.1f}s, {len(graph["nodes"])} nodes, '
         f'{len(graph["topics"])} topics',
         f'- Ping: {env_info.get("ping") or "n/a"}',
@@ -2543,7 +2647,8 @@ def build_summary(ctx):
                 lines.append(f'- Dozzle archive: [{docker_logs["archive"]}]'
                              f'(logs/{docker_logs["archive"]})')
             lines.append(
-                f'- Scope: all history retained by Docker; Dozzle does not keep logs '
+                f'- Scope: containers visible to Dozzle, with all history retained by Docker; '
+                'Dozzle does not keep logs '
                 f'beyond the Docker logging driver retention policy.')
             if docker_logs.get('error'):
                 lines.append(f'- {docker_logs["error"]}')
@@ -2637,14 +2742,14 @@ def main():
                                      help='Do not collect software/configuration fingerprint')
     docker_log_options = parser.add_mutually_exclusive_group()
     docker_log_options.add_argument('--remote-docker-logs', action='store_true',
-                                    help='List robot containers over SSH and download their logs')
+                                    help='Discover containers and download logs from robot Dozzle')
     docker_log_options.add_argument('--skip-docker-logs', action='store_true',
                                     help='Do not download Docker container logs from Dozzle')
     parser.add_argument('--dozzle-url', default=os.environ.get('DOZZLE_URL'),
                         help='Dozzle base URL (default: local port 5200, or robot port 5200 '
                              'with --remote-docker-logs)')
-    parser.add_argument('--dozzle-host', default=os.environ.get('DOZZLE_HOSTNAME', 'localhost'),
-                        help='Dozzle host label for container IDs (default: localhost)')
+    parser.add_argument('--dozzle-host', default=os.environ.get('DOZZLE_HOSTNAME'),
+                        help='Restrict logs to a Dozzle host ID (default: all discovered hosts)')
     parser.add_argument('--docker-logs-timeout', type=float, default=600.0,
                         help='Timeout in seconds for the Dozzle archive download (default: 600)')
     service_log_options = parser.add_mutually_exclusive_group()
@@ -2661,6 +2766,9 @@ def main():
     args = parser.parse_args()
     if args.ssh_port is not None and not 1 <= args.ssh_port <= 65535:
         parser.error('--ssh-port must be between 1 and 65535')
+    if args.remote_docker_logs and not args.dozzle_url and not args.ssh_host:
+        parser.error('--remote-docker-logs requires --ssh-host, ROBOT_IP/ROBOT_HOST, '
+                     'or --dozzle-url')
 
     if not os.environ.get('RMW_IMPLEMENTATION'):
         print('WARNING: RMW_IMPLEMENTATION is not set. Source middleware/connect_robot.sh '
@@ -2822,12 +2930,9 @@ def main():
             dozzle_url = args.dozzle_url or (
                 f'http://{args.ssh_host}:5200/_/logs' if args.remote_docker_logs
                 else 'http://127.0.0.1:5200/_/logs')
-            transport = 'over SSH' if args.remote_docker_logs else 'locally'
-            print(f'Downloading all Docker container logs from Dozzle {transport}...')
+            print(f'Downloading all Docker container logs from Dozzle at {dozzle_url}...')
             docker_logs = collect_docker_logs(
-                logs_dir, dozzle_url, args.dozzle_host, args.ssh_host, args.ssh_user,
-                remote=args.remote_docker_logs, timeout=args.docker_logs_timeout,
-                ssh_port=args.ssh_port)
+                logs_dir, dozzle_url, args.dozzle_host, timeout=args.docker_logs_timeout)
         write_json(logs_dir / 'docker_logs.json', docker_logs)
 
         environment = {
@@ -2840,6 +2945,8 @@ def main():
             'duration_s': round(window, 2),
             'ping': run_ping(env_dir),
         }
+        environment['robot'] = robot_identity(
+            ns, environment['env'], args.ssh_host, environment['host'])
         rates = {t: s.result(window) for t, s in sorted(node.rates.items())}
         diagnostics = {}
         for key, rec in sorted(node.diagnostics.items()):
