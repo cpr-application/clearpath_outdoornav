@@ -1,3 +1,5 @@
+# BETA: The home location API is in beta and will be available in the next release.
+
 import math
 
 from clearpath_config.common.utils.yaml import read_yaml

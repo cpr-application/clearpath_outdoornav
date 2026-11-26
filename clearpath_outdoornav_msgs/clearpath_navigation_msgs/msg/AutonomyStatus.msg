@@ -13,6 +13,7 @@ uint8 GOTO_POI = 4
 uint8 DOCKING_LOCAL = 5
 uint8 UNDOCKING_LOCAL = 6
 uint8 DOCKING_MAP = 7
+# BETA: The go home API is in beta and will be available in the next release.
 uint8 GO_HOME = 8
 
 uint8 state

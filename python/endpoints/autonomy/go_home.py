@@ -1,3 +1,5 @@
+# BETA: The go home API is in beta and will be available in the next release.
+
 from action_msgs.msg import GoalStatus  # Import for reference to status constants
 from clearpath_config.common.utils.yaml import read_yaml
 from clearpath_navigation_msgs.action import ExecuteGoHome

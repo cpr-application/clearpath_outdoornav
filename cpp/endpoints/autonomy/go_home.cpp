@@ -1,3 +1,5 @@
+// BETA: The go home API is in beta and will be available in the next release.
+
 #include <functional>
 #include <future>
 #include <memory>

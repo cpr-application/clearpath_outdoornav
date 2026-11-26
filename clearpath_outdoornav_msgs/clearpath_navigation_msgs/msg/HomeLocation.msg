@@ -1,3 +1,5 @@
+# BETA: The home location API is in beta and will be available in the next release.
+#
 # The robot's home location, used as the destination of the autonomy/go_home action.
 # Home is either a position on the map or one of the docks in the dock database.
 

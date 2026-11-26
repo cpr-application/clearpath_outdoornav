@@ -1,3 +1,5 @@
+# BETA: The go home API is in beta and will be available in the next release.
+#
 # Action definition for sending the robot to its home location using the Clearpath OutdoorNav software.
 # The home location is set using the mission_manager/set_home service. If home is a location, the
 # robot navigates to it (like ExecuteGoTo); if home is a dock, the robot navigates to the dock and
