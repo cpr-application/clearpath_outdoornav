@@ -82,6 +82,16 @@ target_link_libraries(goto_poi
   yaml-cpp::yaml-cpp
 )
 
+# Go Home
+add_executable(go_home
+  endpoints/autonomy/go_home.cpp
+)
+target_include_directories(go_home PUBLIC include)
+ament_target_dependencies(go_home ${dependencies})
+target_link_libraries(go_home
+  yaml-cpp::yaml-cpp
+)
+
 # GoTo
 add_executable(goto
   endpoints/autonomy/goto.cpp
@@ -271,6 +281,7 @@ install(TARGETS
   execute_task_action
   execute_task_srv
   goto_poi
+  go_home
   goto
   mission_from_goal
   mission

@@ -30,6 +30,8 @@ setup(
             'execute_task_srv = endpoints.autonomy.execute_task_srv:main',
             'goto_poi = endpoints.autonomy.goto_poi:main',
             'goto = endpoints.autonomy.goto:main',
+            'go_home = endpoints.autonomy.go_home:main',
+            'set_home = endpoints.autonomy.set_home:main',
             'mission_from_goal = endpoints.autonomy.mission_from_goal:main',
             'mission = endpoints.autonomy.mission:main',
             'pause_autonomy = endpoints.autonomy.pause_autonomy:main',

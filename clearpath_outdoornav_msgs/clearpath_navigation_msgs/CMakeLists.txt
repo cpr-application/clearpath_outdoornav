@@ -16,6 +16,7 @@ rosidl_generate_interfaces(
     ${PROJECT_NAME}
         action/ExecuteGoTo.action
         action/ExecuteGoToPOI.action
+        action/ExecuteGoHome.action
         action/ExecuteMission.action
         action/ExecuteMissionFromGoal.action
         action/InspectPoi.action
@@ -33,6 +34,7 @@ rosidl_generate_interfaces(
         msg/PointOfInterest.msg
         msg/MissionPreview.msg
         msg/GoToPreview.msg
+        msg/HomeLocation.msg
         msg/Vector2D64.msg
         msg/Waypoint.msg
         msg/WaypointStatus.msg

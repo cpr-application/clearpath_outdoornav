@@ -1,0 +1,10 @@
+# BETA: The home location API is in beta and will be available in the next release.
+#
+# Set the robot's home location, used by the autonomy/go_home action.
+# Setting a home with type TYPE_NONE clears the home location.
+
+clearpath_navigation_msgs/HomeLocation home
+---
+# True if the home location was saved, otherwise False
+bool success
+string message

@@ -47,6 +47,7 @@ rosidl_generate_interfaces(
         srv/ImportMap.srv
         srv/ImportNetworkMission.srv
         srv/ImportTask.srv
+        srv/SetHomeLocation.srv
         srv/SplitMapEdge.srv
         srv/UpdateMapEdge.srv
         srv/UpdateMapEdges.srv
